@@ -10,7 +10,8 @@ from models import setup_db, seed_db, db_rollback, db_close, Exercise_Template, 
 from auth import requires_auth, get_access_token, get_role_id, get_fitStat_clients
 from settings import setup_environment
 
-setup_environment()
+
+#setup_environment()
 
 app = Flask(__name__)
 setup_db(app)
