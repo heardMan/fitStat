@@ -14,8 +14,9 @@ from settings import setup_environment
 #setup_environment()
 
 app = Flask(__name__)
-setup_db(app)
-seed_db()
+if os.getenv("FLASK_ENV") is 'development':
+    setup_db(app)
+    seed_db()
 
 CORS(app)
 
