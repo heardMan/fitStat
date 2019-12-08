@@ -177,8 +177,6 @@
 <p>The Flask service acts as a controller for a PostgresQL Database defined using the SQLAlcemy ORM</p>
 <p>The service also employ an Auth0 authentication and authorization schema with role based access controls (RBAC).</p>
 
-<p>Since the service utilizes an Auth0 RBAC there is a configured and functional react Front End Application to help with any debugging during set up.</p>
-
 ### Flask Server
 <p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
 <ol>
@@ -234,4 +232,6 @@
 
 <p>Congratulations!!!</p>
 
+### React Development Debugging Application
 
+<p></p>
