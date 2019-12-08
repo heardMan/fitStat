@@ -12,7 +12,7 @@ from settings import setup_environment
 
 setup_environment()
 
-app = Flask(__name__, static_folder='app/build/static')
+app = Flask(__name__, static_folder='app/build/')
 if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
