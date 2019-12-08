@@ -12,7 +12,7 @@ from settings import setup_environment
 
 setup_environment()
 
-app = Flask(__name__, static_folder="app/build/static", template_folder="app/build")
+app = Flask(__name__, static_folder="app/build/")
 if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
@@ -36,21 +36,14 @@ def return_error(err):
     if err["status"] == True:
             abort(err["code"])
 
-@app.route("/", methods=["GET"])
-def hello_world():
-    return render_template('index.html')
 
-    # return jsonify({
-    #     "success": True,
-    # }), 200
-
-# @app.route('/', defaults={'path': ''})
-# @app.route('/<path:path>')
-# def serve(path):
-#     if path != "" and os.path.exists(app.static_folder + '/' + path):
-#         return send_from_directory(app.static_folder, path)
-#     else:
-#         return send_from_directory(app.static_folder, './index.html')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, './index.html')
 
 """allows users to read all exercise templates in the database"""
 @app.route("/exercise_templates", methods=["GET"])
@@ -979,4 +972,4 @@ def internal_server_error(error):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
