@@ -10,23 +10,19 @@ from models import setup_db, seed_db, db_rollback, db_close, Exercise_Template, 
 from auth import requires_auth, get_access_token, get_role_id, get_fitStat_clients
 from settings import setup_environment
 
-
-#setup_environment()
+setup_environment()
 
 app = Flask(__name__)
-if os.getenv("FLASK_ENV") is 'development':
+if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
+
+if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
+    setup_db(app)
 
 CORS(app)
 
 #separate into error file later
-
-# err = {
-#         "status": False,
-#         "code": None,
-#         "status": None
-#     }
 
 def internal_error(err):
     err["status"] = True
