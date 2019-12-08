@@ -12,7 +12,7 @@ from settings import setup_environment
 
 setup_environment()
 
-app = Flask(__name__, static_folder='app/build')
+app = Flask(__name__, static_folder="./app/build")
 if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
@@ -49,7 +49,7 @@ def serve(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
-        return send_from_directory(app.static_folder, 'index.html')
+        return send_from_directory(app.static_folder, './index.html')
 
 """allows users to read all exercise templates in the database"""
 @app.route("/exercise_templates", methods=["GET"])
