@@ -22,7 +22,7 @@ if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
 
 CORS(app)
 
-#separate into error file later
+
 
 def internal_error(err):
     err["status"] = True
