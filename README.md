@@ -214,7 +214,7 @@
     TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
     TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID```
   
-  
+
 <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
 ```flask run```
 
@@ -224,8 +224,4 @@
 
 <p>If you see the out put  ```OK``` your aplpication should be set up correctly a ready for development</p>
 
-<p>Congratulations!!!</p>
-
-### React Development Debugging Application
-
-<p></p>
+<p>Congratulations!!! Your development server should now be available at: <a href='localhost:5000'>localhost:5000</a></p>
