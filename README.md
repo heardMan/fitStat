@@ -192,7 +192,8 @@
   </li>
   <li>
     <p>Create a .env file in your root directory and add the following variables to it:</p>
-    ```#FLASK DEVELOPMENT VARIABLES
+    <code>
+    #FLASK DEVELOPMENT VARIABLES
     DEBUG = True
     TEST = None
     FLASK_ENV = 'development'
@@ -212,11 +213,14 @@
     TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN
     TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
     TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
-    TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID```
+    TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID
+    </code>
   </li>
   <li>
     <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
-    ```flask run```
+    <code>
+    flask run
+    </code>
   </li>
 </ol>
 
