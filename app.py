@@ -5,14 +5,14 @@ import http.client
 
 from sqlalchemy import exc
 from flask_cors import CORS
-from flask import Flask, request, Response, jsonify, abort, make_response
+from flask import Flask, request, Response, jsonify, abort, make_response, send_from_directory
 from models import setup_db, seed_db, db_rollback, db_close, Exercise_Template, Workout_Template, Workout_Exercise, Exercise, Workout, Exercise_Set
 from auth import requires_auth, get_access_token, get_role_id, get_fitStat_clients
 from settings import setup_environment
 
 setup_environment()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='app/build')
 if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
@@ -36,12 +36,20 @@ def return_error(err):
     if err["status"] == True:
             abort(err["code"])
 
-@app.route("/", methods=["GET"])
-def hello_world():
+# @app.route("/", methods=["GET"])
+# def hello_world():
 
-    return jsonify({
-        "success": True,
-    }), 200
+#     return jsonify({
+#         "success": True,
+#     }), 200
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 """allows users to read all exercise templates in the database"""
 @app.route("/exercise_templates", methods=["GET"])
