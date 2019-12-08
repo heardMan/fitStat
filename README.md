@@ -192,29 +192,27 @@
   </li>
   <li>
     <p>Create a .env file in your root directory and add the following variables to it:</p>
-    <code>
-    #FLASK DEVELOPMENT VARIABLES
-    DEBUG = True
-    TEST = None
-    FLASK_ENV = 'development'
-    FLASK_APP = app.py
-    #DATABASE VARIABLES
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
-    DEVELOPMENT_DATABASE_NAME = 'fitStat'
-    SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
-    TEST_DATABASE_NAME = 'test_fitStat'
-    SECRET = '' #REPLACE WITH YOUR SECRET
-    AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN
-    ALGORITHMS = ['RS256']
-    API_AUDIENCE = 'fitStat'
-    AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID
-    AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET
-    TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN
-    TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
-    TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
-    TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID
-    </code>
+    <code>#FLASK DEVELOPMENT VARIABLES</code>
+    <code>DEBUG = True</code>
+    <code>TEST = None</code>
+    <code>FLASK_ENV = 'development'</code>
+    <code>FLASK_APP = app.py</code>
+    <code>#DATABASE VARIABLES</code>
+    <code>SQLALCHEMY_TRACK_MODIFICATIONS = True</code>
+    <code>SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code>
+    <code>DEVELOPMENT_DATABASE_NAME = 'fitStat'</code>
+    <code>SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code>
+    <code>TEST_DATABASE_NAME = 'test_fitStat'</code>
+    <code>SECRET = '' #REPLACE WITH YOUR SECRET</code>
+    <code>AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN</code>
+    <code>ALGORITHMS = ['RS256']</code>
+    <code>API_AUDIENCE = 'fitStat'</code>
+    <code>AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID</code>
+    <code>AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET</code>
+    <code>TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN</code>
+    <code>TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN</code>
+    <code>TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID</code>
+    <code>TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID</code>
   </li>
   <li>
     <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
