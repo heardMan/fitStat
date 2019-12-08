@@ -12,7 +12,7 @@ from settings import setup_environment
 
 setup_environment()
 
-app = Flask(__name__, static_folder="app/build/")
+app = Flask(__name__)
 if os.getenv("FLASK_ENV") == 'development':
     setup_db(app)
     seed_db()
@@ -22,7 +22,7 @@ if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
 
 CORS(app)
 
-
+#separate into error file later
 
 def internal_error(err):
     err["status"] = True
@@ -36,14 +36,14 @@ def return_error(err):
     if err["status"] == True:
             abort(err["code"])
 
+@app.route("/", methods=["GET"])
+def hello_world():
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, './index.html')
-    else:
-        return send_from_directory(app.static_folder, './index.html')
+    return jsonify({
+        "success": True,
+    }), 200
+
+
 
 """allows users to read all exercise templates in the database"""
 @app.route("/exercise_templates", methods=["GET"])
