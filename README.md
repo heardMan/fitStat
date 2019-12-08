@@ -179,20 +179,19 @@
 
 ### Flask Server
 <p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
-<ol>
-  <li>Clone the repository to your local machine</li>
-  <li>Open a Command Line Application an navigate to your cloned application</li>
-  <li>It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)</li>
-  <li>Acitvate your virtual environment locally</li>
-  <li>
-    <p>Install Dependencies with the following command:</p>
+
+  1. Clone the repository to your local machine
+  2. Open a Command Line Application an navigate to your cloned application
+  3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
+  4 .Acitvate your virtual environment locally
+
+  5. <p>Install Dependencies with the following command:</p>
     ```
     pip install -r reuirements.txt
     ```
-  </li>
-  <li>
-    <p>Create a .env file in your root directory and add the following variables to it:</p>
-    <div>
+
+  6. <p>Create a .env file in your root directory and add the following variables to it:</p>
+  
     ```#FLASK DEVELOPMENT VARIABLES
     DEBUG = True
     TEST = None
@@ -214,15 +213,11 @@
     TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
     TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
     TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID```
-    </div>
-  </li>
-  <li>
-    <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
-    <code>
-    flask run
-    </code>
-  </li>
-</ol>
+  
+
+
+ 
+
 
 <p>To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
 
