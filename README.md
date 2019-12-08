@@ -192,27 +192,27 @@
   </li>
   <li>
     <p>Create a .env file in your root directory and add the following variables to it:</p>
-    <code>#FLASK DEVELOPMENT VARIABLES</code>
-    <code>DEBUG = True</code>
-    <code>TEST = None</code>
-    <code>FLASK_ENV = 'development'</code>
-    <code>FLASK_APP = app.py</code>
-    <code>#DATABASE VARIABLES</code>
-    <code>SQLALCHEMY_TRACK_MODIFICATIONS = True</code>
-    <code>SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code>
-    <code>DEVELOPMENT_DATABASE_NAME = 'fitStat'</code>
-    <code>SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code>
-    <code>TEST_DATABASE_NAME = 'test_fitStat'</code>
-    <code>SECRET = '' #REPLACE WITH YOUR SECRET</code>
-    <code>AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN</code>
-    <code>ALGORITHMS = ['RS256']</code>
-    <code>API_AUDIENCE = 'fitStat'</code>
-    <code>AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID</code>
-    <code>AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET</code>
-    <code>TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN</code>
-    <code>TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN</code>
-    <code>TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID</code>
-    <code>TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID</code>
+    <div><code>#FLASK DEVELOPMENT VARIABLES</code></div>
+    <div><code>DEBUG = True</code></div>
+    <div><code>TEST = None</code></div>
+    <div><code>FLASK_ENV = 'development'</code></div>
+    <div><code>FLASK_APP = app.py</code></div>
+    <div><code>#DATABASE VARIABLES</code></div>
+    <div><code>SQLALCHEMY_TRACK_MODIFICATIONS = True</code></div>
+    <div><code>SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code></div>
+    <div><code>DEVELOPMENT_DATABASE_NAME = 'fitStat'</code></div>
+    <div><code>SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI</code></div>
+    <div><code>TEST_DATABASE_NAME = 'test_fitStat'</code></div>
+    <div><code>SECRET = '' #REPLACE WITH YOUR SECRET</code></div>
+    <div><code>AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN</code></div>
+    <div><code>ALGORITHMS = ['RS256']</code></div>
+    <div><code>API_AUDIENCE = 'fitStat'</code></div>
+    <div><code>AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID</code></div>
+    <div><code>AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET</code></div>
+    <div><code>TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN</code></div>
+    <div><code>TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN</code></div>
+    <div><code>TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID</code></div>
+    <div><code>TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID</code></div>
   </li>
   <li>
     <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
