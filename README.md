@@ -7,6 +7,8 @@
 
 ### GET exercise templates
 <p>Allows a user to get an execise template from the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -14,6 +16,8 @@
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -21,6 +25,8 @@
 
 ### POST exercise templates
 <p>Allows a user to post all execise templates to the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -28,6 +34,8 @@
 
 ### PATCH exercise templates
 <p>Allows a user to patch an execise templates in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -35,6 +43,8 @@
 
 ### DELETE exercise templates
 <p>Allows a user to delete an execise templates in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -45,6 +55,8 @@
 
 ### GET workout templates
 <p>Allows a user to get an workout template from the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -52,6 +64,8 @@
 
 ### GET all workout templates
 <p>Allows a user to get all workout templates from the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -59,6 +73,8 @@
 
 ### POST workout templates
 <p>Allows a user to post all workout templates to the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -66,6 +82,8 @@
 
 ### PATCH workout templates
 <p>Allows a user to patch an workout templates in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -73,6 +91,8 @@
 
 ### DELETE workout templates
 <p>Allows a user to delete an workout templates in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -84,6 +104,8 @@
 
 ### GET workouts
 <p>Allows a user to get their own workout from the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -91,6 +113,8 @@
 
 ### GET all workouts
 <p>Allows a user to get all their own workouts from the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -98,6 +122,8 @@
 
 ### POST workouts
 <p>Allows a user to post their own workout to the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -105,6 +131,8 @@
 
 ### PATCH workouts
 <p>Allows a user to patch their own workout in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -112,6 +140,8 @@
 
 ### DELETE workouts
 <p>Allows a user to delete their own workout in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -123,6 +153,8 @@
 
 ### GET workouts as trainer
 <p>Allows a user to get any workout from the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -130,6 +162,8 @@
 
 ### GET all workouts as trainer
 <p>Allows a user to get all workouts from the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -137,6 +171,8 @@
 
 ### POST workouts as trainer
 <p>Allows a user to post all workout for any user to the database</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -144,6 +180,8 @@
 
 ### PATCH workouts as trainer
 <p>Allows a user to patch any workout in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -151,6 +189,8 @@
 
 ### DELETE workouts as trainer
 <p>Allows a user to delete any workout in the database by its ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -162,6 +202,8 @@
 
 ### GET clients
 <p>Allows a user to get a list of clients from the database by their ID</p>
+<p>URL:</p>
+<p></p>
 <p>Example Request</p>
 ``````
 <p>Example Response</p>
@@ -222,6 +264,6 @@
 
 ```python test.py```
 
-<p>If you see the out put  ```OK``` your aplpication should be set up correctly a ready for development</p>
+<p>If you see the out put 'OK' your aplpication should be set up correctly a ready for development</p>
 
-<p>Congratulations!!! Your development server should now be available at: <a href='localhost:5000'>localhost:5000</a></p>
+<p>Congratulations!!! Your development server should now be available locally on your machine at port 5000</p>

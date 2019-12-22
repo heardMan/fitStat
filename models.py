@@ -295,6 +295,9 @@ class Exercise_Template(db.Model):
     name = Column(String)
     description = Column(String)
     archived = Column(Boolean)
+    workout_exercise_instances = db.relationship("Workout_Exercise")
+    exercise_instances = db.relationship("Exercise")
+
 
     '''Init Method'''
 
@@ -337,6 +340,7 @@ class Workout_Template(db.Model):
     description = Column(String)
     archived = Column(Boolean)
     exercises = db.relationship('Workout_Exercise', backref='Workout_Template')
+    workout_instances = db.relationship('Workout')
     
 
     '''Init Method'''
@@ -380,7 +384,9 @@ class Workout_Exercise(db.Model):
     id = Column(Integer, primary_key=True)
     recommended_sets = Column(Integer)
     exercise_template_id = Column(Integer, ForeignKey('Exercise_Template.id'))
+    exercise_template = db.relationship("Exercise_Template", back_populates="workout_exercise_instances")
     workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
+    
 
     '''Init Method'''
 
@@ -405,6 +411,8 @@ class Workout_Exercise(db.Model):
             'id': self.id,
             'recommended_sets': self.recommended_sets,
             'exercise_template_id': self.exercise_template_id,
+            'name': self.exercise_template.long()["name"],
+            'description': self.exercise_template.long()["description"],
             'workout_template_id': self.workout_template_id
         }
 
@@ -424,13 +432,15 @@ class Workout(db.Model):
     exercises = db.relationship('Exercise', backref='Workout')
     user_id = Column(String)
     workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
+    workout_template = db.relationship("Workout_Template", back_populates="workout_instances")
 
     '''Init Method'''
 
     def __init__(self, date, user_id, workout_template_id):
         self.date = date
         self.user_id = user_id
-        self.workout_template_id = workout_template_id
+        if workout_template_id is not None:
+            self.workout_template_id = workout_template_id
 
     def insert(self):
         db.session.add(self)
@@ -444,12 +454,19 @@ class Workout(db.Model):
         db.session.commit()
 
     def long(self):
+        if self.workout_template_id is None:
+            name = self.date
+        else:
+            name = self.workout_template_id
+
         return {
             'id': self.id,
             'date': self.date,
+            'name': self.workout_template.long()['name'],
             'exercises': [exercise.long() for exercise in self.exercises],
             'user_id': self.user_id,
-            'workout_template_id': self.workout_template_id
+            'workout_template_id': self.workout_template_id,
+            'workout-template': self.workout_template.long()
         }
 
 '''
@@ -470,6 +487,7 @@ class Exercise(db.Model):
     exercise_template_id = Column(Integer, ForeignKey('Exercise_Template.id'))
     workout_id = Column(Integer, ForeignKey('Workout.id'))
     exercise_sets = db.relationship('Exercise_Set', backref='Exercise')
+    exercise_template = db.relationship("Exercise_Template", back_populates="exercise_instances")
 
     '''Init Method'''
 
@@ -491,6 +509,8 @@ class Exercise(db.Model):
     def long(self):
         return {
             'id': self.id,
+            'name':self.exercise_template.long()['name'],
+            'description': self.exercise_template.long()['description'],
             'exercise_template_id': self.exercise_template_id,
             'workout_id': self.workout_id,
             'exercise_sets': [exercise_set.long() for exercise_set in self.exercise_sets]
@@ -515,6 +535,7 @@ class Exercise_Set(db.Model):
     repetitions = Column(Integer)
     rest = Column(Integer)
     exercise_id = Column(Integer, ForeignKey('Exercise.id'))
+    
 
     '''Init Method'''
 

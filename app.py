@@ -110,10 +110,10 @@ def post_exercises(payload):
     }
 
     try:
-        
+        print(request.json)
         new_exercise = Exercise_Template(
             name=request.json.get('name'),
-            description=request.json.get('name')
+            description=request.json.get('description')
         )
         new_exercise.insert()
 
@@ -251,6 +251,7 @@ def post_workout_templates(payload):
     }
     
     try:
+        print(request.data)
         new_workout_template = Workout_Template(
             name=request.json.get('name'),
             description=request.json.get('description')
@@ -286,31 +287,37 @@ def patch_workout_templates(payload, workout_template_id):
     }
 
     try:
+        print(request.json)
 
         workout = Workout_Template.query.get(workout_template_id)
         workout.name = request.json.get('name')
         workout.description = request.json.get('description')
         workout.update()
-        patched_exercises = [exercise.get(
-            'id') for exercise in request.json.get('exercises')]
+
+        patched_exercises = [exercise.get('id') for exercise in request.json.get('exercises')]
 
         for exercise in request.json.get('exercises'):
             if exercise.get('id') == None:
+                print('adding exercise')
                 new_exercise = Workout_Exercise(
                     recommended_sets=exercise['recommended_sets'],
                     exercise_template_id=exercise['exercise_template_id'],
                     workout_template_id=workout.id
-                )
+                ) 
                 new_exercise.insert()
+                patched_exercises.append(new_exercise.id)
 
         for exercise in workout.exercises:
 
             patch_exercise = Workout_Exercise.query.get(exercise.id)
 
             if exercise.id in patched_exercises:
-                patch_exercise.recommended_sets = exercise.recommended_sets
-                patch_exercise.exercise_template_id = exercise.exercise_template_id
-                patch_exercise.update()
+                for _exercise_ in request.json.get('exercises'):
+                    if _exercise_.get('id') == exercise.id:
+                        patch_exercise.recommended_sets = _exercise_.get('recommended_sets')
+                        patch_exercise.exercise_template_id = _exercise_.get('exercise_template_id')
+                        patch_exercise.update()
+                
 
             if exercise.id not in patched_exercises:
                 patch_exercise.delete()
@@ -434,6 +441,7 @@ def post_workouts(payload):
 
     user_id = payload['sub']
     try:
+        print(request.json)
         new_workout = Workout(
             date=request.json.get('date'),
             user_id=user_id,
@@ -626,7 +634,7 @@ def delete_workouts(payload, workout_id):
 
 """allow user to read any/all workouts in the database"""
 @app.route('/trainer/workouts', methods=['GET'])
-@requires_auth(['get:trainer_workouts'])
+@requires_auth(['get:client_workouts'])
 def get_workouts_as_trainer(payload):
 
     err = {
@@ -655,7 +663,7 @@ def get_workouts_as_trainer(payload):
 
 """allow user to read any/all specific workouts in the database by ID"""
 @app.route('/trainer/workouts/<int:workout_id>', methods=['GET'])
-@requires_auth(['get:trainer_workouts'])
+@requires_auth(['get:client_workouts'])
 def get_workout_by_id_as_trainer(payload, workout_id):
 
     err = {
@@ -683,7 +691,7 @@ def get_workout_by_id_as_trainer(payload, workout_id):
 
 """allow user to read any/all specific workouts in the database by ID"""
 @app.route('/trainer/workouts-by-user/<string:user_id>', methods=['GET'])
-@requires_auth(['get:trainer_workouts'])
+@requires_auth(['get:client_workouts'])
 def get_workout_by_user_id_as_trainer(payload, user_id):
 
     err = {
@@ -712,7 +720,7 @@ def get_workout_by_user_id_as_trainer(payload, user_id):
 
 """allow user to post any/all workouts to the database"""
 @app.route('/trainer/workouts', methods=['POST'])
-@requires_auth(['post:trainer_workouts'])
+@requires_auth(['post:client_workouts'])
 def post_workouts_as_trainer(payload):
 
     err = {
@@ -756,7 +764,7 @@ def post_workouts_as_trainer(payload):
 
 """allow user to patch any/all workouts in the database"""
 @app.route('/trainer/workouts/<int:workout_id>', methods=['PATCH'])
-@requires_auth(['patch:trainer_workouts'])
+@requires_auth(['patch:client_workouts'])
 def patch_workouts_as_trainer(payload, workout_id):
 
     err = {
@@ -863,7 +871,7 @@ def patch_workouts_as_trainer(payload, workout_id):
 
 """allow user to delete any/all workouts in the database"""
 @app.route('/trainer/workouts/<int:workout_id>', methods=['DELETE'])
-@requires_auth(['delete:trainer_workouts'])
+@requires_auth(['delete:client_workouts'])
 def delete_workouts_as_trainer(payload, workout_id):
 
     err = {
@@ -912,7 +920,7 @@ def get_clients(payload):
         return_error(err)
         return jsonify({
             "success": True,
-            "workout": clients
+            "clients": clients
         })
         db_close()
 
