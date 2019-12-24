@@ -7,12 +7,18 @@
 
 ### GET exercise templates
 <p>Allows a user to get an execise template from the database by its ID</p>
-<p>URL:</p>
+<p>URL:exercise_templates/<int:exercise ID></p>
 <p></p>
-<p>Example Request</p>
-``````
+
 <p>Example Response</p>
-``````
+```{
+  "exercise": {
+    "description": "multi-joint chest workout",
+    "id": 1,
+    "name": "bench press"
+  },
+  "success": true
+}```
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
