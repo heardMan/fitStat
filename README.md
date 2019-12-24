@@ -11,6 +11,7 @@
 <p></p>
 
 <p>Example Response</p>
+<pre>
     <code>{
       "exercise": {
         "description": "multi-joint chest workout",
@@ -19,6 +20,7 @@
       },
       "success": true
     }</code>
+    </pre>
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
