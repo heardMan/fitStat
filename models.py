@@ -15,16 +15,15 @@ TEST_TRAINER_USER_ID = os.getenv('TEST_TRAINER_USER_ID')
 db = SQLAlchemy()
 
 #database path set as an environment variable
-database_path = os.getenv("SQLALCHEMY_DATABASE_URI")
-test_database_path = os.getenv("SQLALCHEMY_TEST_DATABASE_URI")
+database_path = os.getenv("DATABASE_URI")
+test_database_path = os.getenv("TEST_DATABASE_URI")
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    if os.getenv("FLASK_ENV") == 'development':
-        db.drop_all()
+    #db.drop_all()
     db.create_all()
 
 def db_rollback():
@@ -32,6 +31,11 @@ def db_rollback():
 
 def db_close():
     db.session.close()
+
+
+
+
+
 
 def seed_db():
     exercise_template_one = Exercise_Template(
@@ -45,6 +49,12 @@ def seed_db():
         description='multi-joint back workout'
     )
     exercise_template_two.insert()
+
+    workout_template_test = Workout_Template(
+        name='custom workout',
+        description='a blank workout template used for custom workouts',
+    )
+    workout_template_test.insert()
 
     workout_template_one = Workout_Template(
         name='workout one',
@@ -66,217 +76,77 @@ def seed_db():
     )
     workout_template_one_exercise_two.insert()
 
-    workout_one = Workout(
-         date='March 5',
-         user_id=TEST_TRAINER_USER_ID,
+
+
+    def create_test_workout(userID,i):
+        workout_one = Workout(
+         date='2019-XX-{}'.format(i),
+         user_id=userID,
          workout_template_id=workout_template_one.id
-    )
-    workout_one.insert()
+        )
+        workout_one.insert()
 
-    workout_one_exercise_one = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_one.id
-    )
-    workout_one_exercise_one.insert()
+        workout_one_exercise_one = Exercise(
+            exercise_template_id=exercise_template_one.id,
+            workout_id=workout_one.id
+        )
+        workout_one_exercise_one.insert()
 
-    workout_one_exercise_one_set_one = Exercise_Set(
-        weight=15,
-        repetitions=5,
-        rest=30,
-        exercise_id=workout_one_exercise_one.id
-    )
-    workout_one_exercise_one_set_one.insert()
+        workout_one_exercise_one_set_one = Exercise_Set(
+            weight=1*i,
+            repetitions=1*i,
+            rest=1*i,
+            exercise_id=workout_one_exercise_one.id
+        )
+        workout_one_exercise_one_set_one.insert()
 
-    workout_one_exercise_one_set_two = Exercise_Set(
-        weight=15,
-        repetitions=6,
-        rest=30,
-        exercise_id=workout_one_exercise_one.id
-    )
-    workout_one_exercise_one_set_two.insert()
+        workout_one_exercise_one_set_two = Exercise_Set(
+            weight=1*i,
+            repetitions=1*i,
+            rest=1*i,
+            exercise_id=workout_one_exercise_one.id
+        )
+        workout_one_exercise_one_set_two.insert()
 
-    workout_one_exercise_two = Exercise(
-        exercise_template_id=exercise_template_two.id,
-        workout_id=workout_one.id
-    )
-    workout_one_exercise_two.insert()
+        workout_one_exercise_two = Exercise(
+            exercise_template_id=exercise_template_two.id,
+            workout_id=workout_one.id
+        )
+        workout_one_exercise_two.insert()
 
-    workout_one_exercise_two_set_one =Exercise_Set(
-        weight=150,
-        repetitions=6,
-        rest=60,
-        exercise_id=workout_one_exercise_two.id
-    )
-    workout_one_exercise_two_set_one.insert()
+        workout_one_exercise_two_set_one =Exercise_Set(
+            weight=1*i,
+            repetitions=1*i,
+            rest=1*i,
+            exercise_id=workout_one_exercise_two.id
+        )
+        workout_one_exercise_two_set_one.insert()
 
-    workout_one_exercise_two_set_two =Exercise_Set(
-        weight=150,
-        repetitions=5,
-        rest=60,
-        exercise_id=workout_one_exercise_two.id
-    )
-    workout_one_exercise_two_set_two.insert()
+        workout_one_exercise_two_set_two =Exercise_Set(
+            weight=1*i,
+            repetitions=1*i,
+            rest=1*i,
+            exercise_id=workout_one_exercise_two.id
+        )
+        workout_one_exercise_two_set_two.insert()
 
-
-
-
-    workout_two = Workout(
-         date='March 2',
-         user_id=TEST_CLIENT_USER_ID,
-         workout_template_id=workout_template_one.id
-    )
-    workout_two.insert()
-
-    workout_two_exercise_one = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_two.id
-    )
-    workout_two_exercise_one.insert()
-
-    workout_two_exercise_one_set_one = Exercise_Set(
-        weight=15,
-        repetitions=5,
-        rest=30,
-        exercise_id=workout_two_exercise_one.id
-    )
-    workout_two_exercise_one_set_one.insert()
-
-    workout_two_exercise_one_set_two = Exercise_Set(
-        weight=15,
-        repetitions=6,
-        rest=30,
-        exercise_id=workout_two_exercise_one.id
-    )
-    workout_two_exercise_one_set_two.insert()
-
-    workout_two_exercise_two = Exercise(
-        exercise_template_id=exercise_template_two.id,
-        workout_id=workout_two.id
-    )
-    workout_two_exercise_two.insert()
-
-    workout_two_exercise_two_set_one =Exercise_Set(
-        weight=150,
-        repetitions=6,
-        rest=60,
-        exercise_id=workout_two_exercise_two.id
-    )
-    workout_two_exercise_two_set_one.insert()
-
-    workout_two_exercise_two_set_two =Exercise_Set(
-        weight=150,
-        repetitions=5,
-        rest=60,
-        exercise_id=workout_two_exercise_two.id
-    )
-    workout_two_exercise_two_set_two.insert()
-
-
-
-    workout_three = Workout(
-         date='March 2',
-         user_id=TEST_CLIENT_USER_ID,
-         workout_template_id=workout_template_one.id
-    )
-    workout_three.insert()
-
-    workout_three_exercise_one = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_three.id
-    )
-    workout_three_exercise_one.insert()
-
-    workout_three_exercise_one_set_one = Exercise_Set(
-        weight=15,
-        repetitions=5,
-        rest=30,
-        exercise_id=workout_three_exercise_one.id
-    )
-    workout_three_exercise_one_set_one.insert()
-
-    workout_three_exercise_one_set_two = Exercise_Set(
-        weight=15,
-        repetitions=6,
-        rest=30,
-        exercise_id=workout_three_exercise_one.id
-    )
-    workout_three_exercise_one_set_two.insert()
-
-    workout_three_exercise_two = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_three.id
-    )
-    workout_three_exercise_two.insert()
-
-    workout_three_exercise_two_set_one =Exercise_Set(
-        weight=150,
-        repetitions=6,
-        rest=60,
-        exercise_id=workout_three_exercise_two.id
-    )
-    workout_three_exercise_two_set_one.insert()
-
-    workout_three_exercise_two_set_two =Exercise_Set(
-        weight=150,
-        repetitions=5,
-        rest=60,
-        exercise_id=workout_three_exercise_two.id
-    )
-    workout_three_exercise_two_set_two.insert()
+    create_test_workout(TEST_TRAINER_USER_ID,1)
+    create_test_workout(TEST_TRAINER_USER_ID,2)
+    create_test_workout(TEST_TRAINER_USER_ID,3)
+    create_test_workout(TEST_TRAINER_USER_ID,4)
+    create_test_workout(TEST_TRAINER_USER_ID,5)
+    create_test_workout(TEST_CLIENT_USER_ID,6)
+    create_test_workout(TEST_CLIENT_USER_ID,7)
+    create_test_workout(TEST_CLIENT_USER_ID,8)
+    create_test_workout(TEST_CLIENT_USER_ID,9)
+    create_test_workout(TEST_CLIENT_USER_ID,10)
 
 
 
 
-    workout_four = Workout(
-         date='March 2',
-         user_id=TEST_TRAINER_USER_ID,
-         workout_template_id=workout_template_one.id
-    )
-    workout_four.insert()
 
-    workout_four_exercise_one = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_four.id
-    )
-    workout_four_exercise_one.insert()
 
-    workout_four_exercise_one_set_one = Exercise_Set(
-        weight=15,
-        repetitions=5,
-        rest=30,
-        exercise_id=workout_four_exercise_one.id
-    )
-    workout_four_exercise_one_set_one.insert()
 
-    workout_four_exercise_one_set_two = Exercise_Set(
-        weight=15,
-        repetitions=6,
-        rest=30,
-        exercise_id=workout_four_exercise_one.id
-    )
-    workout_four_exercise_one_set_two.insert()
-
-    workout_four_exercise_two = Exercise(
-        exercise_template_id=exercise_template_one.id,
-        workout_id=workout_four.id
-    )
-    workout_four_exercise_two.insert()
-
-    workout_four_exercise_two_set_one =Exercise_Set(
-        weight=150,
-        repetitions=6,
-        rest=60,
-        exercise_id=workout_four_exercise_two.id
-    )
-    workout_four_exercise_two_set_one.insert()
-
-    workout_four_exercise_two_set_two =Exercise_Set(
-        weight=150,
-        repetitions=5,
-        rest=60,
-        exercise_id=workout_four_exercise_two.id
-    )
-    workout_four_exercise_two_set_two.insert()
 
 
 
@@ -535,7 +405,7 @@ class Exercise_Set(db.Model):
     repetitions = Column(Integer)
     rest = Column(Integer)
     exercise_id = Column(Integer, ForeignKey('Exercise.id'))
-    
+
 
     '''Init Method'''
 

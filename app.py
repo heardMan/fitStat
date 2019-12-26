@@ -13,12 +13,11 @@ from settings import setup_environment
 setup_environment()
 
 app = Flask(__name__)
-if os.getenv("FLASK_ENV") == 'development':
-    setup_db(app)
-    seed_db()
+#setup_db(app)
 
 if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
     setup_db(app)
+    #seed_db()
 
 CORS(app)
 
@@ -42,6 +41,7 @@ def hello_world():
     return jsonify({
         "success": True,
     }), 200
+    
 
 
 
@@ -204,7 +204,9 @@ def get_workout_templates(payload):
     }
     
     try:
+        
         query = Workout_Template.query.all()
+        
 
         workouts = [workout.long() for workout in query]
         
@@ -229,7 +231,9 @@ def get_workout_template_by_id(payload, workout_template_id):
     }
     
     try:
+        
         workout_template = Workout_Template.query.get(workout_template_id)
+
     except:
         internal_error(err)
     finally:
@@ -351,6 +355,7 @@ def delete_workout_templates(payload, workout_template_id):
     try:
 
         workout = Workout_Template.query.get(workout_template_id)
+        _workout_ = workout.long()
 
         for exercise in workout.exercises:
             exercise.delete()
@@ -369,7 +374,7 @@ def delete_workout_templates(payload, workout_template_id):
         return_error(err)
         return jsonify({
             "success": True,
-            "deleted_workout": workout.long()
+            "deleted_workout": _workout_
         })
         db_close()
 
@@ -387,7 +392,9 @@ def get_workouts(payload):
     user_id = payload['sub']
 
     try:
+        
         query = Workout.query.filter_by(user_id=user_id).all()
+
         workouts = [workout.long() for workout in query]
         for workout in workouts:
             if user_id != workout['user_id']:
@@ -410,12 +417,16 @@ def get_workout_by_id(payload, workout_id):
     err = {
         "status": False,
         "code": None,
-        "status": None
+        "msg": None
     }
 
     user_id = payload['sub']
     try:
+        
         workout = Workout.query.get(workout_id)
+        if workout is None:
+            err['status'] = True
+            err['code'] = 404
         if user_id != workout.user_id:
             err['status'] = True
             err['code'] = 403
@@ -595,6 +606,7 @@ def delete_workouts(payload, workout_id):
     
     try:
         workout = Workout.query.get(workout_id)
+        _workout_ = workout.long()
         
         
         if workout.user_id == None:
@@ -621,9 +633,10 @@ def delete_workouts(payload, workout_id):
         internal_error(err)
     finally:
         return_error(err)
+        
         return jsonify({
             "success": True,
-            "deleted_workout": workout.long()
+            "deleted_workout": _workout_
         })
         db_close()
 
@@ -646,7 +659,8 @@ def get_workouts_as_trainer(payload):
     try:
 
         query = Workout.query.all()
-        workouts = [workout.long() for workout in query]
+        if query is not None:
+            workouts = [workout.long() for workout in query]
 
     except:
 
@@ -675,6 +689,10 @@ def get_workout_by_id_as_trainer(payload, workout_id):
     try:
 
         workout = Workout.query.get(workout_id)
+        if workout is None:
+            err['status'] = True
+            err['code'] = 404
+        
 
     except:
 
@@ -688,6 +706,7 @@ def get_workout_by_id_as_trainer(payload, workout_id):
             "success": True,
             "workout": workout.long()
         })
+        
 
 """allow user to read any/all specific workouts in the database by ID"""
 @app.route('/trainer/workouts-by-user/<string:user_id>', methods=['GET'])
@@ -732,6 +751,7 @@ def post_workouts_as_trainer(payload):
     user_id = payload['sub']
 
     try:
+        _workout_template_id_ = request.json.get('workout_template_id')
         new_workout = Workout(
             date=request.json.get('date'),
             user_id=request.json.get('user_id'),
@@ -826,8 +846,7 @@ def patch_workouts_as_trainer(payload, workout_id):
                     patch_exercise.exercise_template_id = exercise['exercise_template_id']
                     patch_exercise.update()
 
-                    patched_sets = [_exercise_set_.get(
-                        'id') for _exercise_set_ in exercise.get('exercise_sets')]
+                    patched_sets = [_exercise_set_.get('id') for _exercise_set_ in exercise.get('exercise_sets')]
 
                     for exercise_set in exercise.get('exercise_sets'):
 
@@ -841,12 +860,11 @@ def patch_workouts_as_trainer(payload, workout_id):
                             new_exercise_set.insert()
                         else:
 
-                            patch_exercise_set = Exercise_Set.query.get(
-                                exercise_set.get('id'))
+                            patch_exercise_set = Exercise_Set.query.get(exercise_set.get('id'))
 
                             original_exercise_sets = [
                                 a.id for a in patch_exercise.exercise_sets]
-                            print(original_exercise_sets)
+                            
                             for set_id in original_exercise_sets:
                                 if set_id not in patched_sets:
                                     delete_set = Exercise_Set.query.get(set_id)
@@ -883,6 +901,8 @@ def delete_workouts_as_trainer(payload, workout_id):
     user_id = payload['sub']
     try:
         workout = Workout.query.get(workout_id)
+
+        _workout_ = workout.long()
         for exercise in workout.exercises:
             delete_exercise = Exercise.query.get(exercise.id)
             for exercise_set in delete_exercise.exercise_sets:
@@ -897,7 +917,7 @@ def delete_workouts_as_trainer(payload, workout_id):
         return_error(err)
         return jsonify({
             "success": True,
-            "deleted_workout": workout.long()
+            "deleted_workout": _workout_
         })
         db_close()
 

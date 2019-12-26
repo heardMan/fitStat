@@ -1,0 +1,576 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.5
+-- Dumped by pg_dump version 11.5
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: Exercise; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Exercise" (
+    id integer NOT NULL,
+    exercise_template_id integer,
+    workout_id integer
+);
+
+
+ALTER TABLE public."Exercise" OWNER TO mark;
+
+--
+-- Name: Exercise_Set; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Exercise_Set" (
+    id integer NOT NULL,
+    weight integer,
+    repetitions integer,
+    rest integer,
+    exercise_id integer
+);
+
+
+ALTER TABLE public."Exercise_Set" OWNER TO mark;
+
+--
+-- Name: Exercise_Set_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Exercise_Set_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Exercise_Set_id_seq" OWNER TO mark;
+
+--
+-- Name: Exercise_Set_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Exercise_Set_id_seq" OWNED BY public."Exercise_Set".id;
+
+
+--
+-- Name: Exercise_Template; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Exercise_Template" (
+    id integer NOT NULL,
+    name character varying,
+    description character varying,
+    archived boolean
+);
+
+
+ALTER TABLE public."Exercise_Template" OWNER TO mark;
+
+--
+-- Name: Exercise_Template_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Exercise_Template_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Exercise_Template_id_seq" OWNER TO mark;
+
+--
+-- Name: Exercise_Template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Exercise_Template_id_seq" OWNED BY public."Exercise_Template".id;
+
+
+--
+-- Name: Exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Exercise_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Exercise_id_seq" OWNER TO mark;
+
+--
+-- Name: Exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Exercise_id_seq" OWNED BY public."Exercise".id;
+
+
+--
+-- Name: Workout; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Workout" (
+    id integer NOT NULL,
+    date character varying,
+    user_id character varying,
+    workout_template_id integer
+);
+
+
+ALTER TABLE public."Workout" OWNER TO mark;
+
+--
+-- Name: Workout_Exercise; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Workout_Exercise" (
+    id integer NOT NULL,
+    recommended_sets integer,
+    exercise_template_id integer,
+    workout_template_id integer
+);
+
+
+ALTER TABLE public."Workout_Exercise" OWNER TO mark;
+
+--
+-- Name: Workout_Exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Workout_Exercise_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Workout_Exercise_id_seq" OWNER TO mark;
+
+--
+-- Name: Workout_Exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Workout_Exercise_id_seq" OWNED BY public."Workout_Exercise".id;
+
+
+--
+-- Name: Workout_Template; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public."Workout_Template" (
+    id integer NOT NULL,
+    name character varying,
+    description character varying,
+    archived boolean
+);
+
+
+ALTER TABLE public."Workout_Template" OWNER TO mark;
+
+--
+-- Name: Workout_Template_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Workout_Template_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Workout_Template_id_seq" OWNER TO mark;
+
+--
+-- Name: Workout_Template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Workout_Template_id_seq" OWNED BY public."Workout_Template".id;
+
+
+--
+-- Name: Workout_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public."Workout_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Workout_id_seq" OWNER TO mark;
+
+--
+-- Name: Workout_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+--
+
+ALTER SEQUENCE public."Workout_id_seq" OWNED BY public."Workout".id;
+
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO mark;
+
+--
+-- Name: Exercise id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_id_seq"'::regclass);
+
+
+--
+-- Name: Exercise_Set id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise_Set" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_Set_id_seq"'::regclass);
+
+
+--
+-- Name: Exercise_Template id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise_Template" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_Template_id_seq"'::regclass);
+
+
+--
+-- Name: Workout id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout" ALTER COLUMN id SET DEFAULT nextval('public."Workout_id_seq"'::regclass);
+
+
+--
+-- Name: Workout_Exercise id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Exercise" ALTER COLUMN id SET DEFAULT nextval('public."Workout_Exercise_id_seq"'::regclass);
+
+
+--
+-- Name: Workout_Template id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Template" ALTER COLUMN id SET DEFAULT nextval('public."Workout_Template_id_seq"'::regclass);
+
+
+--
+-- Data for Name: Exercise; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Exercise" (id, exercise_template_id, workout_id) FROM stdin;
+1	1	1
+2	2	1
+3	1	2
+4	2	2
+5	1	3
+6	2	3
+7	1	4
+8	2	4
+9	1	5
+10	2	5
+11	1	6
+12	2	6
+13	1	7
+14	2	7
+15	1	8
+16	2	8
+17	1	9
+18	2	9
+19	1	10
+20	2	10
+\.
+
+
+--
+-- Data for Name: Exercise_Set; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Exercise_Set" (id, weight, repetitions, rest, exercise_id) FROM stdin;
+1	1	1	1	1
+2	1	1	1	1
+3	1	1	1	2
+4	1	1	1	2
+5	2	2	2	3
+6	2	2	2	3
+7	2	2	2	4
+8	2	2	2	4
+9	3	3	3	5
+10	3	3	3	5
+11	3	3	3	6
+12	3	3	3	6
+13	4	4	4	7
+14	4	4	4	7
+15	4	4	4	8
+16	4	4	4	8
+17	5	5	5	9
+18	5	5	5	9
+19	5	5	5	10
+20	5	5	5	10
+21	6	6	6	11
+22	6	6	6	11
+23	6	6	6	12
+24	6	6	6	12
+25	7	7	7	13
+26	7	7	7	13
+27	7	7	7	14
+28	7	7	7	14
+29	8	8	8	15
+30	8	8	8	15
+31	8	8	8	16
+32	8	8	8	16
+33	9	9	9	17
+34	9	9	9	17
+35	9	9	9	18
+36	9	9	9	18
+37	10	10	10	19
+38	10	10	10	19
+39	10	10	10	20
+40	10	10	10	20
+\.
+
+
+--
+-- Data for Name: Exercise_Template; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Exercise_Template" (id, name, description, archived) FROM stdin;
+1	bench press	multi-joint chest workout	f
+2	bent over row	multi-joint back workout	f
+3	test exercise template	test exercise description	f
+\.
+
+
+--
+-- Data for Name: Workout; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Workout" (id, date, user_id, workout_template_id) FROM stdin;
+1	2019-XX-1	auth0|5de465650364600d2e2bd14b	2
+2	2019-XX-2	auth0|5de465650364600d2e2bd14b	2
+3	2019-XX-3	auth0|5de465650364600d2e2bd14b	2
+4	2019-XX-4	auth0|5de465650364600d2e2bd14b	2
+5	2019-XX-5	auth0|5de465650364600d2e2bd14b	2
+6	2019-XX-6	auth0|5de4648d1cd1610f13974529	2
+7	2019-XX-7	auth0|5de4648d1cd1610f13974529	2
+8	2019-XX-8	auth0|5de4648d1cd1610f13974529	2
+9	2019-XX-9	auth0|5de4648d1cd1610f13974529	2
+10	2019-XX-10	auth0|5de4648d1cd1610f13974529	2
+\.
+
+
+--
+-- Data for Name: Workout_Exercise; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Workout_Exercise" (id, recommended_sets, exercise_template_id, workout_template_id) FROM stdin;
+1	5	1	2
+2	5	2	2
+3	1	1	3
+\.
+
+
+--
+-- Data for Name: Workout_Template; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public."Workout_Template" (id, name, description, archived) FROM stdin;
+1	custom workout	a blank workout template used for custom workouts	f
+2	workout one	a good chest workout	f
+3	test workout template	test workout template description	f
+\.
+
+
+--
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: mark
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+\.
+
+
+--
+-- Name: Exercise_Set_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Exercise_Set_id_seq"', 40, true);
+
+
+--
+-- Name: Exercise_Template_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Exercise_Template_id_seq"', 3, true);
+
+
+--
+-- Name: Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Exercise_id_seq"', 20, true);
+
+
+--
+-- Name: Workout_Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Workout_Exercise_id_seq"', 3, true);
+
+
+--
+-- Name: Workout_Template_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Workout_Template_id_seq"', 3, true);
+
+
+--
+-- Name: Workout_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+--
+
+SELECT pg_catalog.setval('public."Workout_id_seq"', 10, true);
+
+
+--
+-- Name: Exercise_Set Exercise_Set_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise_Set"
+    ADD CONSTRAINT "Exercise_Set_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Exercise_Template Exercise_Template_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise_Template"
+    ADD CONSTRAINT "Exercise_Template_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Exercise Exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise"
+    ADD CONSTRAINT "Exercise_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Workout_Exercise Workout_Exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Exercise"
+    ADD CONSTRAINT "Workout_Exercise_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Workout_Template Workout_Template_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Template"
+    ADD CONSTRAINT "Workout_Template_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Workout Workout_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout"
+    ADD CONSTRAINT "Workout_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- Name: Exercise_Set Exercise_Set_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise_Set"
+    ADD CONSTRAINT "Exercise_Set_exercise_id_fkey" FOREIGN KEY (exercise_id) REFERENCES public."Exercise"(id);
+
+
+--
+-- Name: Exercise Exercise_exercise_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise"
+    ADD CONSTRAINT "Exercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."Exercise_Template"(id);
+
+
+--
+-- Name: Exercise Exercise_workout_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Exercise"
+    ADD CONSTRAINT "Exercise_workout_id_fkey" FOREIGN KEY (workout_id) REFERENCES public."Workout"(id);
+
+
+--
+-- Name: Workout_Exercise Workout_Exercise_exercise_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Exercise"
+    ADD CONSTRAINT "Workout_Exercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."Exercise_Template"(id);
+
+
+--
+-- Name: Workout_Exercise Workout_Exercise_workout_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout_Exercise"
+    ADD CONSTRAINT "Workout_Exercise_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."Workout_Template"(id);
+
+
+--
+-- Name: Workout Workout_workout_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public."Workout"
+    ADD CONSTRAINT "Workout_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."Workout_Template"(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
