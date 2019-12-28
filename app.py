@@ -110,7 +110,7 @@ def post_exercises(payload):
     }
 
     try:
-        print(request.json)
+        #print(request.json)
         new_exercise = Exercise_Template(
             name=request.json.get('name'),
             description=request.json.get('description')
@@ -255,7 +255,7 @@ def post_workout_templates(payload):
     }
     
     try:
-        print(request.data)
+        #print(request.data)
         new_workout_template = Workout_Template(
             name=request.json.get('name'),
             description=request.json.get('description')
@@ -291,7 +291,7 @@ def patch_workout_templates(payload, workout_template_id):
     }
 
     try:
-        print(request.json)
+        #print(request.json)
 
         workout = Workout_Template.query.get(workout_template_id)
         workout.name = request.json.get('name')
@@ -302,7 +302,7 @@ def patch_workout_templates(payload, workout_template_id):
 
         for exercise in request.json.get('exercises'):
             if exercise.get('id') == None:
-                print('adding exercise')
+                #print('adding exercise')
                 new_exercise = Workout_Exercise(
                     recommended_sets=exercise['recommended_sets'],
                     exercise_template_id=exercise['exercise_template_id'],
@@ -452,7 +452,7 @@ def post_workouts(payload):
 
     user_id = payload['sub']
     try:
-        print(request.json)
+        #print(request.json)
         new_workout = Workout(
             date=request.json.get('date'),
             user_id=user_id,
@@ -538,7 +538,7 @@ def patch_workouts(payload, workout_id):
                         if exercise_id not in patched_exercises:
                             delete_exercise = Exercise.query.get(exercise_id)
                             for old_exercise_set in delete_exercise.exercise_sets:
-                                print(old_exercise_set)
+                                #print(old_exercise_set)
                                 delete_exercise_set = Exercise_Set.query.get(
                                     old_exercise_set.id)
                                 delete_exercise_set.delete()
@@ -568,7 +568,7 @@ def patch_workouts(payload, workout_id):
 
                                 original_exercise_sets = [
                                     a.id for a in patch_exercise.exercise_sets]
-                                print(original_exercise_sets)
+                                #print(original_exercise_sets)
                                 for set_id in original_exercise_sets:
                                     if set_id not in patched_sets:
                                         delete_set = Exercise_Set.query.get(set_id)
@@ -759,7 +759,7 @@ def post_workouts_as_trainer(payload):
         )
         new_workout.insert()
         for exercise in request.json.get('exercises'):
-            print(exercise)
+            #print(exercise)
             new_exercise = Exercise(
                 exercise_template_id=exercise['exercise_template_id'],
                 workout_id=new_workout.id
@@ -836,7 +836,7 @@ def patch_workouts_as_trainer(payload, workout_id):
                     if exercise_id not in patched_exercises:
                         delete_exercise = Exercise.query.get(exercise_id)
                         for old_exercise_set in delete_exercise.exercise_sets:
-                            print(old_exercise_set)
+                            #print(old_exercise_set)
                             delete_exercise_set = Exercise_Set.query.get(
                                 old_exercise_set.id)
                             delete_exercise_set.delete()

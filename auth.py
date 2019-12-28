@@ -70,6 +70,7 @@ def get_access_token():
     conn.request("POST", "/oauth/token", payload, headers)
     res = conn.getresponse()
     data = res.read()
+    conn.close()
 
     return json.loads(data.decode("utf-8"))['access_token']
 
@@ -81,6 +82,7 @@ def get_role_id(role_name):
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data.decode("utf-8"))
+    conn.close()
 
     for role in json_data:
         if role['name'] == role_name:
@@ -97,6 +99,7 @@ def get_fitStat_clients():
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data.decode("utf-8"))
+    conn.close()
 
     client_list=[]
 
@@ -107,6 +110,8 @@ def get_fitStat_clients():
             "name": user["name"]
         }
         client_list.append(user_obj)
+
+    
     return client_list
 
 def check_permissions(permissions, payload):

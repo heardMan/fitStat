@@ -793,7 +793,7 @@ class APITestCase(unittest.TestCase):
         trainer_post = self.client().post('/trainer/workouts', json=test_workout,
                                           headers=self.trainer_headers)
         trainer_data = trainer_post.json
-        print('TRAINER_DATA: {}'.format(trainer_data))
+        #print('TRAINER_DATA: {}'.format(trainer_data))
         # ensure request was good
         self.assertEqual(trainer_post.status_code, 200)
         self.assertEqual(trainer_data['success'], True)
@@ -906,6 +906,33 @@ class APITestCase(unittest.TestCase):
         self.assertGreater(len(trainer_data['deleted_workout']), 0)
 
     # def test_get_clients(self):
+    def test_get_clients(self):
+        """Test the get clients route"""
+
+        """Test Authentication"""
+        unauthenticated_get = self.client().get('/clients')
+        unauthenticated_get_data = unauthenticated_get.json
+
+        self.assertEqual(unauthenticated_get.status_code, 401)
+        self.assertEqual(unauthenticated_get_data['success'], False)
+
+        """Test Client Functionality"""
+        # test the unauthorized /drinks route
+        client_get = self.client().get('/clients', headers=self.client_headers)
+        client_data = client_get.json
+        # ensure request was good
+        self.assertEqual(client_get.status_code, 403)
+        self.assertEqual(client_data['success'], False)
+
+        """Test Trainer Functionality"""
+        # test the unauthorized /drinks route
+        trainer_get = self.client().get('/clients', headers=self.trainer_headers)
+        trainer_data = trainer_get.json
+        # ensure request was good
+        self.assertEqual(trainer_get.status_code, 200)
+        self.assertEqual(trainer_data['success'], True)
+        # ensure we have at least one exercise
+        self.assertGreater(len(trainer_data['clients']), 0)
 
 
 # Make the tests conveniently executable

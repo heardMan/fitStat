@@ -1830,9 +1830,14 @@
 <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
 ```flask run```
 
-<p>To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
+<p>The proceeding set of commands creates a test database with the name "test_fitStat" then populates that database with some sample data that can be used for testing purposes. To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
 
-```python test.py```
+<pre><code>
+dropdb test_fitStat
+createdb test_fitStat
+psql test_fitStat < seeds.psql
+python test.py
+</code></pre>
 
 <p>If you see the out put 'OK' your aplpication should be set up correctly a ready for development</p>
 
