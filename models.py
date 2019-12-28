@@ -142,15 +142,6 @@ def seed_db():
     create_test_workout(TEST_CLIENT_USER_ID,10)
 
 
-
-
-
-
-
-
-
-
-
 '''
 EXERCISE TEMPLATE MODEL
 '''
@@ -164,19 +155,16 @@ class Exercise_Template(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    archived = Column(Boolean, default=False)
     workout_exercise_instances = db.relationship("Workout_Exercise")
     exercise_instances = db.relationship("Exercise")
 
 
     '''Init Method'''
 
-    def __init__(self, name, description, archived):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.archived = archived
-
-
+        
     def insert(self):
         db.session.add(self)
         db.session.commit()
@@ -208,17 +196,15 @@ class Workout_Template(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String, default='')
-    archived = Column(Boolean, default=False)
     exercises = db.relationship('Workout_Exercise', backref='Workout_Template')
     workout_instances = db.relationship('Workout')
     
 
     '''Init Method'''
 
-    def __init__(self, name, description, archived):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.archived = archived
        
     def insert(self):
         db.session.add(self)
@@ -256,16 +242,14 @@ class Workout_Exercise(db.Model):
     exercise_template_id = Column(Integer, ForeignKey('Exercise_Template.id'))
     exercise_template = db.relationship("Exercise_Template", back_populates="workout_exercise_instances")
     workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
-    archived = Column(Boolean, default=False)
     
 
     '''Init Method'''
 
-    def __init__(self, recommended_sets, exercise_template_id, workout_template_id, archived):
+    def __init__(self, recommended_sets, exercise_template_id, workout_template_id):
         self.recommended_sets = recommended_sets
         self.exercise_template_id = exercise_template_id
         self.workout_template_id = workout_template_id
-        self.archived = archived
 
     def insert(self):
         db.session.add(self)
@@ -305,17 +289,15 @@ class Workout(db.Model):
     user_id = Column(String)
     workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
     workout_template = db.relationship("Workout_Template", back_populates="workout_instances")
-    archived = Column(Boolean, default=False)
 
     '''Init Method'''
 
-    def __init__(self, date, user_id, workout_template_id, archived):
+    def __init__(self, date, user_id, workout_template_id):
         self.date = date
         self.user_id = user_id
         if workout_template_id is not None:
             self.workout_template_id = workout_template_id
 
-        self.archived = archived
 
     def insert(self):
         db.session.add(self)
@@ -363,14 +345,12 @@ class Exercise(db.Model):
     workout_id = Column(Integer, ForeignKey('Workout.id'))
     exercise_sets = db.relationship('Exercise_Set', backref='Exercise')
     exercise_template = db.relationship("Exercise_Template", back_populates="exercise_instances")
-    archived = Column(Boolean, default=False)
 
     '''Init Method'''
 
     def __init__(self, exercise_template_id, workout_id):
         self.exercise_template_id = exercise_template_id
         self.workout_id = workout_id
-        self.archived = archived
 
     def insert(self):
         db.session.add(self)
@@ -412,18 +392,16 @@ class Exercise_Set(db.Model):
     repetitions = Column(Integer, default=True)
     rest = Column(Integer, default=True)
     exercise_id = Column(Integer, ForeignKey('Exercise.id'))
-    archived = Column(Boolean, default=False)
 
 
     '''Init Method'''
 
-    def __init__(self, weight, repetitions, rest, exercise_id, archived):
+    def __init__(self, weight, repetitions, rest, exercise_id):
         self.weight = weight
         self.repetitions = repetitions
         self.rest = rest
         self.exercise_id = exercise_id
-        self.archived = archived
-
+        
     def insert(self):
         db.session.add(self)
         db.session.commit()
