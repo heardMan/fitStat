@@ -202,7 +202,7 @@ class APITestCase(unittest.TestCase):
         """Test Trainer Functionality"""
 
         trainer_delete = self.client().delete(
-            '/exercise_templates/3', headers=self.trainer_headers)
+            '/exercise_templates/5', headers=self.trainer_headers)
         trainer_data = trainer_delete.json
 
         self.assertEqual(trainer_delete.status_code, 200)

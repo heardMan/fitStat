@@ -26,7 +26,7 @@ CORS(app)
 def internal_error(err):
     err["status"] = True
     if err["code"] is None:
-        err["code"] = 500
+        err["code"] = 500  
     err["msg"] = sys.exc_info()
     db_rollback()
     print("Error: {}".format(sys.exc_info()))

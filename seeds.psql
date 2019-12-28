@@ -76,9 +76,8 @@ ALTER SEQUENCE public."Exercise_Set_id_seq" OWNED BY public."Exercise_Set".id;
 
 CREATE TABLE public."Exercise_Template" (
     id integer NOT NULL,
-    name character varying,
-    description character varying,
-    archived boolean
+    name character varying NOT NULL,
+    description character varying NOT NULL
 );
 
 
@@ -148,7 +147,7 @@ ALTER TABLE public."Workout" OWNER TO mark;
 
 CREATE TABLE public."Workout_Exercise" (
     id integer NOT NULL,
-    recommended_sets integer,
+    recommended_sets integer NOT NULL,
     exercise_template_id integer,
     workout_template_id integer
 );
@@ -184,9 +183,8 @@ ALTER SEQUENCE public."Workout_Exercise_id_seq" OWNED BY public."Workout_Exercis
 
 CREATE TABLE public."Workout_Template" (
     id integer NOT NULL,
-    name character varying,
-    description character varying,
-    archived boolean
+    name character varying NOT NULL,
+    description character varying
 );
 
 
@@ -369,10 +367,12 @@ COPY public."Exercise_Set" (id, weight, repetitions, rest, exercise_id) FROM std
 -- Data for Name: Exercise_Template; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Exercise_Template" (id, name, description, archived) FROM stdin;
-1	bench press	multi-joint chest workout	f
-2	bent over row	multi-joint back workout	f
-3	test exercise template	test exercise description	f
+COPY public."Exercise_Template" (id, name, description) FROM stdin;
+1	bench press	multi-joint chest workout
+2	bent over row	multi-joint back workout
+3	squat	multi-joint leg workout
+4	deadlift	multi-joint leg workout
+5	shoulder press	multi-joint shoulder workout
 \.
 
 
@@ -401,7 +401,8 @@ COPY public."Workout" (id, date, user_id, workout_template_id) FROM stdin;
 COPY public."Workout_Exercise" (id, recommended_sets, exercise_template_id, workout_template_id) FROM stdin;
 1	5	1	2
 2	5	2	2
-3	1	1	3
+3	5	3	3
+4	5	4	3
 \.
 
 
@@ -409,10 +410,10 @@ COPY public."Workout_Exercise" (id, recommended_sets, exercise_template_id, work
 -- Data for Name: Workout_Template; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Workout_Template" (id, name, description, archived) FROM stdin;
-1	custom workout	a blank workout template used for custom workouts	f
-2	workout one	a good chest workout	f
-3	test workout template	test workout template description	f
+COPY public."Workout_Template" (id, name, description) FROM stdin;
+1	custom workout	a blank workout template used for custom workouts
+2	workout one	a good chest workout
+3	workout two	a good leg workout
 \.
 
 
@@ -435,7 +436,7 @@ SELECT pg_catalog.setval('public."Exercise_Set_id_seq"', 40, true);
 -- Name: Exercise_Template_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-SELECT pg_catalog.setval('public."Exercise_Template_id_seq"', 3, true);
+SELECT pg_catalog.setval('public."Exercise_Template_id_seq"', 5, true);
 
 
 --
@@ -449,7 +450,7 @@ SELECT pg_catalog.setval('public."Exercise_id_seq"', 20, true);
 -- Name: Workout_Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-SELECT pg_catalog.setval('public."Workout_Exercise_id_seq"', 3, true);
+SELECT pg_catalog.setval('public."Workout_Exercise_id_seq"', 4, true);
 
 
 --
