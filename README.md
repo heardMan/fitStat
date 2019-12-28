@@ -1770,9 +1770,9 @@
 {
   "clients": [
     {
-      "email": "markyheard@gmail.com",
-      "id": "auth0|5de465650364600d2e2bd14b",
-      "name": "markyheard@gmail.com"
+      "email": "someguy@gmail.com",
+      "id": "auth0|5de466550364611d2e2bd00b",
+      "name": "someguy@gmail.com"
     }
   ],
   "success": true
@@ -1798,13 +1798,13 @@
   4 .Acitvate your virtual environment locally
 
   5. <p>Install Dependencies with the following command:</p>
-    ```
-    pip install -r reuirements.txt
-    ```
+    <code>pip install -r reuirements.txt</code>
+    
 
   6. <p>Create a .env file in your root directory and add the following variables to it:</p>
   
-    ```#FLASK DEVELOPMENT VARIABLES
+    <pre><code>
+    #FLASK DEVELOPMENT VARIABLES
     DEBUG = True
     TEST = None
     FLASK_ENV = 'development'
@@ -1824,11 +1824,12 @@
     TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN
     TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
     TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
-    TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID```
+    TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID
+    </code></pre>
   
 
 <p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active:</p>
-```flask run```
+<code>flask run</code>
 
 <p>The proceeding set of commands creates a test database with the name "test_fitStat" then populates that database with some sample data that can be used for testing purposes. To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
 
