@@ -90,7 +90,7 @@ def get_fitStat_clients():
 
     token = get_access_token()
     #make clients and change this to clients
-    client_role_id = get_role_id("fitStat-Trainer")
+    client_role_id = get_role_id("fitStat-Client")
     conn = http.client.HTTPSConnection(AUTH0_DOMAIN)
     headers = { "authorization": "Bearer {}".format(token) }
     conn.request("GET", "/api/v2/roles/{}/users".format(client_role_id), headers=headers)
