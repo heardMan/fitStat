@@ -378,7 +378,7 @@
     ],
     "id": 1,
     "name": "workout one",
-    "user_id": "auth0|5de465650364600d2e2bd14b",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -468,7 +468,7 @@
       ],
       "id": 1,
       "name": "workout one",
-      "user_id": "auth0|5de465650364600d2e2bd14b",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -546,7 +546,7 @@
       ],
       "id": 4,
       "name": "workout one",
-      "user_id": "auth0|5de465650364600d2e2bd14b",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -674,7 +674,7 @@
     ],
     "id": 5,
     "name": "workout one",
-    "user_id": "auth0|5de465650364600d2e2bd14b",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -797,7 +797,7 @@
     ],
     "id": 1,
     "name": "workout one",
-    "user_id": "auth0|5de465650364600d2e2bd14b",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -886,7 +886,7 @@
     ],
     "id": 1,
     "name": "workout one",
-    "user_id": "auth0|5de465650364600d2e2bd14b",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -980,7 +980,7 @@
     ],
     "id": 1,
     "name": "workout one",
-    "user_id": "auth0|5de465650364600d2e2bd14b",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -1070,7 +1070,7 @@
       ],
       "id": 1,
       "name": "workout one",
-      "user_id": "auth0|5de465650364600d2e2bd14b",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1148,7 +1148,7 @@
       ],
       "id": 2,
       "name": "workout one",
-      "user_id": "auth0|5de4648d1cd1610f13974529",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1226,7 +1226,7 @@
       ],
       "id": 3,
       "name": "workout one",
-      "user_id": "auth0|5de4648d1cd1610f13974529",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1304,7 +1304,7 @@
       ],
       "id": 4,
       "name": "workout one",
-      "user_id": "auth0|5de465650364600d2e2bd14b",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1336,7 +1336,7 @@
 
 ### GET workouts as trainer by User ID
 <p>Allows a user to post all workout for any user to the database</p>
-<p>URL: trainer/workouts-by-user/auth0|5de4648d1cd1610f13974529</p>
+<p>URL: trainer/workouts-by-user/auth0|5de466550364611d2e2bd00b</p>
 
 <p>Example Response</p>
 <pre><code>
@@ -1395,7 +1395,7 @@
       ],
       "id": 2,
       "name": "workout one",
-      "user_id": "auth0|5de4648d1cd1610f13974529",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1473,7 +1473,7 @@
       ],
       "id": 3,
       "name": "workout one",
-      "user_id": "auth0|5de4648d1cd1610f13974529",
+      "user_id": "auth0|5de466550364611d2e2bd00b",
       "workout-template": {
         "description": "a good chest workout",
         "exercises": [
@@ -1512,7 +1512,7 @@
 {
 	"date":"Mar 5",
 	"workout_template_id":1,
-	"user_id":"auth0|5de4648d1cd1610f13974529",
+	"user_id":"auth0|5de466550364611d2e2bd00b",
 	"exercises":[
 		{
 			"exercise_template_id": 1,
@@ -1602,7 +1602,7 @@
     ],
     "id": 5,
     "name": "custom workout",
-    "user_id": "auth0|5de4648d1cd1610f13974529",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "custom workout",
       "exercises": [],
@@ -1656,7 +1656,7 @@
             }
         ],
         "id": 1,
-        "user_id": "auth0|5de4648d1cd1610f13974529",
+        "user_id": "auth0|5de466550364611d2e2bd00b",
         "workout_template_id": 2
     }
 </code></pre>
@@ -1685,7 +1685,7 @@
     ],
     "id": 2,
     "name": "workout one",
-    "user_id": "auth0|5de4648d1cd1610f13974529",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "a good chest workout",
       "exercises": [
@@ -1744,7 +1744,7 @@
     ],
     "id": 2,
     "name": "custom workout",
-    "user_id": "auth0|5de4648d1cd1610f13974529",
+    "user_id": "auth0|5de466550364611d2e2bd00b",
     "workout-template": {
       "description": "custom workout",
       "exercises": [],
