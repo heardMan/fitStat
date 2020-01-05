@@ -2,6 +2,14 @@
 <p>Welcome to the fitStat API Docs</p>
 <p>fitStat is an API used to track wokouts</p>
 
+<p>This project was made as my capstone project for the Udacity Fullstack Web Developer Nanodegree</p>
+
+<p>The way the application is currently desiged is that there are two roles: Client and Trainer</p>
+
+<p>The Client role is able to: read exercise templates, read workout templates, read/post/patch/delete their own workouts</p>
+
+<p>Trainers have administrative access and can perform all functions. Trainers also have the ability to read/post/patch/delete client workouts in the database</p>
+
 
 ## Endpoints
 
@@ -10,16 +18,14 @@
 <p>URL: exercise_templates/1</p>
 
 <p>Example Response</p>
-<pre>
-    <code>{
+<pre><code>{
       "exercise": {
         "description": "multi-joint chest workout",
         "id": 1,
         "name": "bench press"
       },
       "success": true
-    }</code>
-    </pre>
+    }</code></pre>
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
