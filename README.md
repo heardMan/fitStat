@@ -1743,11 +1743,11 @@
   3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
   4 .Acitvate your virtual environment locally
 
-  5. <p>Install Dependencies with the following command:</p>
-    <code>pip install -r reuirements.txt</code>
+  #### 5. Install Dependencies with the following command:
+  <code>pip install -r reuirements.txt</code>
     
-  #### Setup .env a local file
-  6. <p>Create a .env file in your root directory and add the following variables to it:</p>
+  
+  #### 6. Create a .env file in your root directory and add the following variables to it:
   
     <pre><code>
     #FLASK DEVELOPMENT VARIABLES
