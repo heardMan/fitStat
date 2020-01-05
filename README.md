@@ -714,7 +714,8 @@
         "id": 1,
         "user_id": "5dd9ed38a40c120ed15c6277",
         "workout_template_id": 1
-    }</code></pre>
+    }
+</code></pre>
 <p>Example Response</p>
 <pre><code>{
   "edited_workout": {
