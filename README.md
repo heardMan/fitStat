@@ -279,8 +279,6 @@
 <p>Allows a user to delete an workout templates in the database by its ID</p>
 <p>URL: workout_templates/2</p>
 
-<p>Example Request</p>
-<pre><code></code></pre>
 <p>Example Response</p>
 <pre><code>{
   "deleted_workout": {
