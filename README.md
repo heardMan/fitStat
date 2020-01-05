@@ -1,10 +1,9 @@
 # fitStat API
 <p>Welcome to the fitStat API Docs</p>
+
 <p>fitStat is an API used to track wokouts</p>
 
 <p>This project was made as my capstone project for the Udacity Fullstack Web Developer Nanodegree</p>
-
-<p>This application main goal is to create an easy way to record workouts</p>
 
 <p>The application has two roles: Client and Trainer</p>
 
