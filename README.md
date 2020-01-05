@@ -4,11 +4,21 @@
 
 <p>This project was made as my capstone project for the Udacity Fullstack Web Developer Nanodegree</p>
 
-<p>The way the application is currently desiged is that there are two roles: Client and Trainer</p>
+<p>This application main goal is to create an easy way to record workouts</p>
+
+<p>The application has two roles: Client and Trainer</p>
 
 <p>The Client role is able to: read exercise templates, read workout templates, read/post/patch/delete their own workouts</p>
 
 <p>Trainers have administrative access and can perform all functions. Trainers also have the ability to read/post/patch/delete client workouts in the database</p>
+
+<p>The preceeding architecture allows clients to fully record and control their workout history while also allowing trainers the ability to record/edit/delete workouts on the behalf of clients</p>
+
+<p>It is important to know that exercises must be entered into the database by a user with a role of trainer as a template before they can be chosen by any users, however, other than this contraint the API is fairly stright forward</p>
+
+<p>It is also possible to create workout templates to use a a basis for an individual workout however user workouts do not require a template to be recorded into the database in the same way that user exercises must be based on templates</p>
+
+<p>For more detailed information on what data is and is not required please take a look at the models file.</p>
 
 
 ## Development Set Up Instructions
