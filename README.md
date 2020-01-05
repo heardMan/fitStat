@@ -1738,16 +1738,16 @@
 ### Flask Server Set Up Instruction
 <p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
 
-  1. Clone the repository to your local machine
-  2. Open a Command Line Application an navigate to your cloned application
-  3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
-  4 .Acitvate your virtual environment locally
+  ##### 1. Clone the repository to your local machine
+  ##### 2. Open a Command Line Application an navigate to your cloned application
+  ##### 3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
+  ##### 4 .Acitvate your virtual environment locally
 
-  #### 5. Install Dependencies with the following command:
+  ##### 5. Install Dependencies with the following command:
   <code>pip install -r reuirements.txt</code>
     
   
-  #### 6. Create a .env file in your root directory and add the following variables to it:
+  ##### 6. Create a .env file in your root directory and add the following variables to it:
   
     <pre><code>
     #FLASK DEVELOPMENT VARIABLES
