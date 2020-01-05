@@ -11,9 +11,70 @@
 <p>Trainers have administrative access and can perform all functions. Trainers also have the ability to read/post/patch/delete client workouts in the database</p>
 
 
-## Endpoints
+## Development Set Up Instructions
 
-### GET exercise templates
+<p>This application is primarily composed of a Flask microserver.</p>
+<p>The Flask service acts as a controller for a PostgresQL Database defined using the SQLAlcemy ORM</p>
+<p>The service also employ an Auth0 authentication and authorization schema with role based access controls (RBAC).</p>
+
+### Flask Server Set Up Instruction
+<p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
+
+  #### 1. Clone the repository to your local machine
+  #### 2. Open a Command Line Application an navigate to your cloned application
+  #### 3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
+  #### 4 .Acitvate your virtual environment locally
+
+  #### 5. Install Dependencies with the following command:
+  <code>pip install -r reuirements.txt</code>
+    
+  
+  #### 6. Create a .env file in your root directory and add the following variables to it:
+  
+  <pre><code>#FLASK DEVELOPMENT VARIABLES
+DEBUG = True
+TEST = None
+FLASK_ENV = 'development'
+FLASK_APP = app.py
+#DATABASE VARIABLES
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
+DEVELOPMENT_DATABASE_NAME = 'fitStat'
+SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
+TEST_DATABASE_NAME = 'test_fitStat'
+SECRET = '' #REPLACE WITH YOUR SECRET
+AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN
+ALGORITHMS = ['RS256']
+API_AUDIENCE = 'fitStat'
+AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID
+AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET
+TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN
+TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
+TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
+TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID</code></pre>
+  
+
+<p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active: <code>flask run</code></p>
+
+
+
+
+<p>The proceeding set of commands creates a test database with the name "test_fitStat" then populates that database with some sample data that can be used for testing purposes. To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
+
+### Testing Set Up Instruction
+<pre><code>dropdb test_fitStat
+createdb test_fitStat
+psql test_fitStat < seeds.psql
+python test.py</code></pre>
+
+<p>If you see the out put 'OK' your aplpication should be set up correctly a ready for development</p>
+
+<p>Congratulations!!! Your development server should now be available locally on your machine at port 5000</p>
+
+
+## API Endpoints
+
+### GET exercise templates by ID
 <p>Allows a user to get an execise template from the database by its ID</p>
 <p>URL: exercise_templates/1</p>
 
@@ -106,7 +167,7 @@
 
 
 
-### GET workout templates
+### GET workout templates by ID
 <p>Allows a user to get an workout template from the database by its ID</p>
 <p>URL: workout_templates/1</p>
 
@@ -294,7 +355,7 @@
 
 
 
-### GET workouts
+### GET workouts by ID
 <p>Allows a user to get their own workout from the database by its ID</p>
 <p>URL: workouts/1</p>
 
@@ -1729,62 +1790,3 @@
 
 
 
-## Development Set Up Instructions
-
-<p>This application is primarily composed of a Flask microserver.</p>
-<p>The Flask service acts as a controller for a PostgresQL Database defined using the SQLAlcemy ORM</p>
-<p>The service also employ an Auth0 authentication and authorization schema with role based access controls (RBAC).</p>
-
-### Flask Server Set Up Instruction
-<p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
-
-  #### 1. Clone the repository to your local machine
-  #### 2. Open a Command Line Application an navigate to your cloned application
-  #### 3. It is strongly Recommended that you create a python virtual environment for your application (Python 3 is recommended)
-  #### 4 .Acitvate your virtual environment locally
-
-  #### 5. Install Dependencies with the following command:
-  <code>pip install -r reuirements.txt</code>
-    
-  
-  #### 6. Create a .env file in your root directory and add the following variables to it:
-  
-  <pre><code>#FLASK DEVELOPMENT VARIABLES
-DEBUG = True
-TEST = None
-FLASK_ENV = 'development'
-FLASK_APP = app.py
-#DATABASE VARIABLES
-SQLALCHEMY_TRACK_MODIFICATIONS = True
-SQLALCHEMY_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
-DEVELOPMENT_DATABASE_NAME = 'fitStat'
-SQLALCHEMY_TEST_DATABASE_URI = '' #REPLACE WITH YOUR LOCAL POSTGRES URI
-TEST_DATABASE_NAME = 'test_fitStat'
-SECRET = '' #REPLACE WITH YOUR SECRET
-AUTH0_DOMAIN = '' #REPLACE WITH YOUR AUTH0 DOMAIN
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'fitStat'
-AUTH0_CLIENT_ID = '' #REPLACE WITH YOUR AUTH0 CLIENT ID
-AUTH0_CLIENT_SECRET = '' #REPLACE WITH YOUR AUTH0 CLIENT SECRET
-TEST_CLIENT_TOKEN = '' #REPLACE WITH A TEST TOKEN
-TEST_TRAINER_TOKEN = '' #REPLACE WITH A TEST TOKEN
-TEST_CLIENT_USER_ID = '' #REPLACE WITH A TEST ID
-TEST_TRAINER_USER_ID = '' #REPLACE WITH A TEST ID</code></pre>
-  
-
-<p>Once you have updated all the environmental variables run you will be able to run the server. Simply type the following command into your command prompt at the root directory with your virtual environment active: <code>flask run</code></p>
-
-
-
-
-<p>The proceeding set of commands creates a test database with the name "test_fitStat" then populates that database with some sample data that can be used for testing purposes. To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
-
-### Testing Set Up Instruction
-<pre><code>dropdb test_fitStat
-createdb test_fitStat
-psql test_fitStat < seeds.psql
-python test.py</code></pre>
-
-<p>If you see the out put 'OK' your aplpication should be set up correctly a ready for development</p>
-
-<p>Congratulations!!! Your development server should now be available locally on your machine at port 5000</p>
