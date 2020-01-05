@@ -1751,7 +1751,7 @@
   
   <pre><code>#FLASK DEVELOPMENT VARIABLES
   DEBUG = True
-  TEST = None
+TEST = None
   FLASK_ENV = 'development'
   FLASK_APP = app.py
   #DATABASE VARIABLES
