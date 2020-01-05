@@ -1611,7 +1611,7 @@
         "id": 1,
         "user_id": "auth0|5de466550364611d2e2bd00b",
         "workout_template_id": 2
-    }</code></pre>
+  }</code></pre>
 <p>Example Response</p>
 <pre><code>{
   "edited_workout": {
