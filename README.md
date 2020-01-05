@@ -55,12 +55,10 @@
 <p>URL: exercise_templates/</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
 	"name": "test_exercise",
 	"description": "test_description"
-}
-</code></pre>
+}</code></pre>
 <p>Example Response</p>
 <pre><code>{
   "new_exercise": {
