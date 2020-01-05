@@ -87,7 +87,10 @@ python test.py</code></pre>
       },
       "success": true
     }</code></pre>
-    <hr/>
+  
+  ___
+  ---
+  ***
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
