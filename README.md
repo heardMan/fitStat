@@ -62,57 +62,47 @@
 }
 </code></pre>
 <p>Example Response</p>
-<pre>
-<code>
-{
+<pre><code>{
   "new_exercise": {
     "description": "test_description",
     "id": 3,
     "name": "test_exercise"
   },
   "success": true
-}
-</code>
-</pre>
+}</code></pre>
 
 ### PATCH exercise templates
 <p>Allows a user to patch an execise templates in the database by its ID</p>
 <p>URL: exercise_templates/2</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
 	"name": "test_exercise_edited",
 	"description": "test_description_edited"
-}
-</code></pre>
+}</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "edited_exercise": {
     "description": "test_description_edited",
     "id": 2,
     "name": "test_exercise_edited"
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### DELETE exercise templates
 <p>Allows a user to delete an execise templates in the database by its ID</p>
 <p>URL: exercise_templates/3</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "deleted_exercise": {
     "description": "test_description",
     "id": 3,
     "name": "test_exercise"
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 
 
@@ -123,8 +113,7 @@
 <p>URL: workout_templates/1</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workouts": {
     "description": "a good chest workout",
@@ -149,16 +138,14 @@
     "id": 1,
     "name": "workout one"
   }
-}
-</code></pre>
+}</code></pre>
 
 ### GET all workout templates
 <p>Allows a user to get all workout templates from the database</p>
 <p>URL: workout_templates/</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workouts": [
     {
@@ -185,16 +172,14 @@
       "name": "workout one"
     }
   ]
-}
-</code></pre>
+}</code></pre>
 
 ### POST workout templates
 <p>Allows a user to post all workout templates to the database</p>
 <p>URL: workout_templates/</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
         "description": "a good leg workout",
         "exercises": [
             {
@@ -207,11 +192,9 @@
             }
         ],
         "name": "workout one"
-    }
-</code></pre>
+    }</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "new_workout": {
     "description": "a good leg workout",
     "exercises": [
@@ -236,16 +219,14 @@
     "name": "workout one"
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### PATCH workout templates
 <p>Allows a user to patch an workout templates in the database by its ID</p>
 <p>URL: workout_templates/1</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
             "description": "a good chest workout",
             "exercises": [
                 {
@@ -267,11 +248,9 @@
             ],
             "id": 1,
             "name": "workout one"
-        }
-</code></pre>
+        }</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "edited_workout": {
     "description": "a good chest workout",
     "exercises": [
@@ -296,8 +275,7 @@
     "name": "workout one"
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### DELETE workout templates
 <p>Allows a user to delete an workout templates in the database by its ID</p>
@@ -306,8 +284,7 @@
 <p>Example Request</p>
 <pre><code></code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "deleted_workout": {
     "description": "a good leg workout",
     "exercises": [],
@@ -315,8 +292,7 @@
     "name": "workout one"
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 
 
@@ -327,8 +303,7 @@
 <p>URL: workouts/1</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workout": {
     "date": "March 5",
@@ -408,16 +383,14 @@
     },
     "workout_template_id": 1
   }
-}
-</code></pre>
+}</code></pre>
 
 ### GET all workouts
 <p>Allows a user to get all their own workouts from the database</p>
 <p>URL: workouts/</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workouts": [
     {
@@ -577,16 +550,14 @@
       "workout_template_id": 1
     }
   ]
-}
-</code></pre>
+}</code></pre>
 
 ### POST workouts
 <p>Allows a user to post their own workout to the database</p>
 <p>URL: workouts/</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
 	"date":"Mar 5",
 	"workout_template_id":1,
 	"exercises":[
@@ -621,11 +592,9 @@
             	]
 		}
 		]
-}
-</code></pre>
+}</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "new_workout": {
     "date": "Mar 5",
     "exercises": [
@@ -705,16 +674,14 @@
     "workout_template_id": 1
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### PATCH workouts
 <p>Allows a user to patch their own workout in the database by its ID</p>
 <p>URL: workouts/1</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
         "date": "March 6",
         "exercises": [
             {
@@ -751,11 +718,9 @@
         "id": 1,
         "user_id": "5dd9ed38a40c120ed15c6277",
         "workout_template_id": 1
-    }
-</code></pre>
+    }</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "edited_workout": {
     "date": "March 6",
     "exercises": [
@@ -828,16 +793,14 @@
     "workout_template_id": 1
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### DELETE workouts
 <p>Allows a user to delete their own workout in the database by its ID</p>
 <p>URL: workouts/1</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "deleted_workout": {
     "date": "March 5",
     "exercises": [
@@ -917,8 +880,7 @@
     "workout_template_id": 2
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 
 
@@ -929,8 +891,7 @@
 <p>URL: trainer/workouts/1</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workout": {
     "date": "March 5",
@@ -1010,16 +971,14 @@
     },
     "workout_template_id": 2
   }
-}
-</code></pre>
+}</code></pre>
 
 ### GET all workouts as trainer
 <p>Allows a user to get all workouts from the database</p>
 <p>URL: /trainer/workouts</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workouts": [
     {
@@ -1335,16 +1294,14 @@
       "workout_template_id": 2
     }
   ]
-}
-</code></pre>
+}</code></pre>
 
 ### GET workouts as trainer by User ID
 <p>Allows a user to post all workout for any user to the database</p>
 <p>URL: trainer/workouts-by-user/auth0|5de466550364611d2e2bd00b</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "success": true,
   "workouts": [
     {
@@ -1504,16 +1461,14 @@
       "workout_template_id": 2
     }
   ]
-}
-</code></pre>
+}</code></pre>
 
 ### POST workouts as trainer
 <p>Allows a user to post all workout for any user to the database</p>
 <p>URL: </p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
 	"date":"Mar 5",
 	"workout_template_id":1,
 	"user_id":"auth0|5de466550364611d2e2bd00b",
@@ -1549,11 +1504,9 @@
             	]
 		}
 		]
-}
-</code></pre>
+}</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "new_workout": {
     "date": "Mar 5",
     "exercises": [
@@ -1616,16 +1569,14 @@
     "workout_template_id": 1
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### PATCH workouts as trainer
 <p>Allows a user to patch any workout in the database by its ID</p>
 <p>URL:</p>
 
 <p>Example Request</p>
-<pre><code>
-{
+<pre><code>{
         "date": "March 6",
         "exercises": [
             {
@@ -1662,11 +1613,9 @@
         "id": 1,
         "user_id": "auth0|5de466550364611d2e2bd00b",
         "workout_template_id": 2
-    }
-</code></pre>
+    }</code></pre>
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "edited_workout": {
     "date": "March 6",
     "exercises": [
@@ -1716,16 +1665,14 @@
     "workout_template_id": 2
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 ### DELETE workouts as trainer
 <p>Allows a user to delete any workout in the database by its ID</p>
 <p>URL: trainer/workouts/2</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "deleted_workout": {
     "date": "March 6",
     "exercises": [
@@ -1758,8 +1705,7 @@
     "workout_template_id": 1
   },
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 
 
@@ -1770,8 +1716,7 @@
 <p>URL:</p>
 
 <p>Example Response</p>
-<pre><code>
-{
+<pre><code>{
   "clients": [
     {
       "email": "someguy@gmail.com",
@@ -1780,8 +1725,7 @@
     }
   ],
   "success": true
-}
-</code></pre>
+}</code></pre>
 
 
 
