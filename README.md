@@ -87,10 +87,7 @@ python test.py</code></pre>
       },
       "success": true
     }</code></pre>
-  
-  ___
-  ---
-  ***
+  <hr/>
 
 ### GET all exercise templates
 <p>Allows a user to get all execise templates from the database</p>
@@ -114,6 +111,7 @@ python test.py</code></pre>
   "success": true
 }</code>
 </pre>
+<hr/>
 
 ### POST exercise templates
 <p>Allows a user to post an execise template to the database</p>
@@ -133,6 +131,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### PATCH exercise templates
 <p>Allows a user to patch an execise templates in the database by its ID</p>
@@ -152,6 +151,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### DELETE exercise templates
 <p>Allows a user to delete an execise templates in the database by its ID</p>
@@ -166,6 +166,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 
 
@@ -202,6 +203,7 @@ python test.py</code></pre>
     "name": "workout one"
   }
 }</code></pre>
+<hr/>
 
 ### GET all workout templates
 <p>Allows a user to get all workout templates from the database</p>
@@ -236,6 +238,7 @@ python test.py</code></pre>
     }
   ]
 }</code></pre>
+<hr/>
 
 ### POST workout templates
 <p>Allows a user to post all workout templates to the database</p>
@@ -283,6 +286,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### PATCH workout templates
 <p>Allows a user to patch an workout templates in the database by its ID</p>
@@ -339,6 +343,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### DELETE workout templates
 <p>Allows a user to delete an workout templates in the database by its ID</p>
@@ -354,6 +359,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 
 
@@ -445,6 +451,7 @@ python test.py</code></pre>
     "workout_template_id": 1
   }
 }</code></pre>
+<hr/>
 
 ### GET all workouts
 <p>Allows a user to get all their own workouts from the database</p>
@@ -612,6 +619,7 @@ python test.py</code></pre>
     }
   ]
 }</code></pre>
+<hr/>
 
 ### POST workouts
 <p>Allows a user to post their own workout to the database</p>
@@ -736,6 +744,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### PATCH workouts
 <p>Allows a user to patch their own workout in the database by its ID</p>
@@ -857,6 +866,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### DELETE workouts
 <p>Allows a user to delete their own workout in the database by its ID</p>
@@ -944,6 +954,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 
 
@@ -1035,6 +1046,7 @@ python test.py</code></pre>
     "workout_template_id": 2
   }
 }</code></pre>
+<hr/>
 
 ### GET all workouts as trainer
 <p>Allows a user to get all workouts from the database</p>
@@ -1358,6 +1370,7 @@ python test.py</code></pre>
     }
   ]
 }</code></pre>
+<hr/>
 
 ### GET workouts as trainer by User ID
 <p>Allows a user to post all workout for any user to the database</p>
@@ -1525,6 +1538,7 @@ python test.py</code></pre>
     }
   ]
 }</code></pre>
+<hr/>
 
 ### POST workouts as trainer
 <p>Allows a user to post all workout for any user to the database</p>
@@ -1633,6 +1647,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### PATCH workouts as trainer
 <p>Allows a user to patch any workout in the database by its ID</p>
@@ -1729,6 +1744,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 ### DELETE workouts as trainer
 <p>Allows a user to delete any workout in the database by its ID</p>
@@ -1769,6 +1785,7 @@ python test.py</code></pre>
   },
   "success": true
 }</code></pre>
+<hr/>
 
 
 
@@ -1789,6 +1806,7 @@ python test.py</code></pre>
   ],
   "success": true
 }</code></pre>
+<hr/>
 
 
 
