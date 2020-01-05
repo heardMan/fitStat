@@ -1735,7 +1735,7 @@
 <p>The Flask service acts as a controller for a PostgresQL Database defined using the SQLAlcemy ORM</p>
 <p>The service also employ an Auth0 authentication and authorization schema with role based access controls (RBAC).</p>
 
-### Flask Server
+### Flask Server Set Up Instruction
 <p>Setting up an instance of the Flask Server for development is a fairly stright forward process</p>
 
   1. Clone the repository to your local machine
@@ -1746,7 +1746,7 @@
   5. <p>Install Dependencies with the following command:</p>
     <code>pip install -r reuirements.txt</code>
     
-
+  #### Setup .env a local file
   6. <p>Create a .env file in your root directory and add the following variables to it:</p>
   
     <pre><code>
@@ -1779,6 +1779,7 @@
 
 <p>The proceeding set of commands creates a test database with the name "test_fitStat" then populates that database with some sample data that can be used for testing purposes. To ensure that the application is configured properly run the the folowing command from the project's root directory with the virtual environment active:</p>
 
+### Testing Set Up Instruction
 <pre><code>
 dropdb test_fitStat
 createdb test_fitStat
