@@ -33,8 +33,7 @@
 
 <p>Example Response</p>
 <pre>
-<code>
-{
+<code>{
   "exercises": [
     {
       "description": "multi-joint chest workout",
@@ -48,8 +47,7 @@
     }
   ],
   "success": true
-}
-</code>
+}</code>
 </pre>
 
 ### POST exercise templates
