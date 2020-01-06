@@ -408,7 +408,7 @@ def post_workout_templates(payload):
             err['msg'] = 'Bad Request: Name Property Must Be a String'
 
         # ensure name property is present
-        if request.json.get('description') is None:
+        elif request.json.get('description') is None:
             err['status'] = True
             err['code'] = 400
             err['msg'] = 'Bad Request: No Description Property Found'
@@ -419,7 +419,7 @@ def post_workout_templates(payload):
             err['msg'] = 'Bad Request: Description Property Must Be a String'
 
         # ensure name property is present
-        if request.json.get('exercises') is None:
+        elif request.json.get('exercises') is None:
             err['status'] = True
             err['code'] = 400
             err['msg'] = 'Bad Request: No Name Property Found'
@@ -735,31 +735,32 @@ def post_workouts(payload):
             err['status'] = True
             err['code'] = 400
             err['msg'] = 'Bad Request: Date Property Must Be a String'
+        else:
 
-        # define a new exercise instance
-        new_workout = Workout(
-            date=request.json.get('date'),
-            user_id=user_id,
-            workout_template_id=request.json.get('workout_template_id')
-        )
-        #insert a new exercise instance into the database
-        new_workout.insert()
-        # 
-        for exercise in request.json.get('exercises'):
-
-            new_exercise = Exercise(
-                exercise_template_id=exercise['exercise_template_id'],
-                workout_id=new_workout.id
+            # define a new exercise instance
+            new_workout = Workout(
+                date=request.json.get('date'),
+                user_id=user_id,
+                workout_template_id=request.json.get('workout_template_id')
             )
-            new_exercise.insert()
-            for exercise_set in exercise['exercise_sets']:
-                new_exercise_set = Exercise_Set(
-                    weight=exercise_set['weight'],
-                    repetitions=exercise_set['repetitions'],
-                    rest=exercise_set['rest'],
-                    exercise_id=new_exercise.id
+            #insert a new exercise instance into the database
+            new_workout.insert()
+            # 
+            for exercise in request.json.get('exercises'):
+
+                new_exercise = Exercise(
+                    exercise_template_id=exercise['exercise_template_id'],
+                    workout_id=new_workout.id
                 )
-                new_exercise_set.insert()
+                new_exercise.insert()
+                for exercise_set in exercise['exercise_sets']:
+                    new_exercise_set = Exercise_Set(
+                        weight=exercise_set['weight'],
+                        repetitions=exercise_set['repetitions'],
+                        rest=exercise_set['rest'],
+                        exercise_id=new_exercise.id
+                    )
+                    new_exercise_set.insert()
     except:
         # handle any exception from the database
         internal_error(err)
@@ -1117,35 +1118,36 @@ def post_workouts_as_trainer(payload):
             err['status'] = True
             err['code'] = 400
             err['msg'] = 'Bad Request: Date Property Must Be a String'
+        else:
 
-        # define a new workout instance
-        new_workout = Workout(
-            date=request.json.get('date'),
-            user_id=request.json.get('user_id'),
-            workout_template_id=request.json.get('workout_template_id')
-        )
-        # insert a new workout instance in the database
-        new_workout.insert()
-        # loop through the exercise list in request
-        for exercise in request.json.get('exercises'):
-            # define a workout exercise instance for each worout exercise in the rquest
-            new_exercise = Exercise(
-                exercise_template_id=exercise['exercise_template_id'],
-                workout_id=new_workout.id
+            # define a new workout instance
+            new_workout = Workout(
+                date=request.json.get('date'),
+                user_id=request.json.get('user_id'),
+                workout_template_id=request.json.get('workout_template_id')
             )
-            # insert the workout exercise in the database
-            new_exercise.insert()
-            # loop through the sets in each exercise set 
-            for exercise_set in exercise['exercise_sets']:
-                # define a new exercise set instance in the database
-                new_exercise_set = Exercise_Set(
-                    weight=exercise_set['weight'],
-                    repetitions=exercise_set['repetitions'],
-                    rest=exercise_set['rest'],
-                    exercise_id=new_exercise.id
+            # insert a new workout instance in the database
+            new_workout.insert()
+            # loop through the exercise list in request
+            for exercise in request.json.get('exercises'):
+                # define a workout exercise instance for each worout exercise in the rquest
+                new_exercise = Exercise(
+                    exercise_template_id=exercise['exercise_template_id'],
+                    workout_id=new_workout.id
                 )
-                # insert the new exerise instance in the database
-                new_exercise_set.insert()
+                # insert the workout exercise in the database
+                new_exercise.insert()
+                # loop through the sets in each exercise set 
+                for exercise_set in exercise['exercise_sets']:
+                    # define a new exercise set instance in the database
+                    new_exercise_set = Exercise_Set(
+                        weight=exercise_set['weight'],
+                        repetitions=exercise_set['repetitions'],
+                        rest=exercise_set['rest'],
+                        exercise_id=new_exercise.id
+                    )
+                    # insert the new exerise instance in the database
+                    new_exercise_set.insert()
 
     except:
         # handle any exception from the database
