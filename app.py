@@ -411,17 +411,12 @@ def post_workout_templates(payload):
         if request.json.get('description') is None:
             err['status'] = True
             err['code'] = 400
-            err['msg'] = 'Bad Request: No Name Property Found'
-        # ensure name property is not blank
-        elif request.json.get('description') is '':
-            err['status'] = True
-            err['code'] = 400
-            err['msg'] = 'Bad Request: Name Property Cannot Be Blank'
+            err['msg'] = 'Bad Request: No Description Property Found'
         # ensure name property is a string
         elif type(request.json.get('description')) is not str:
             err['status'] = True
             err['code'] = 400
-            err['msg'] = 'Bad Request: Name Property Must Be a String'
+            err['msg'] = 'Bad Request: Description Property Must Be a String'
 
         # ensure name property is present
         if request.json.get('exercises') is None:
@@ -725,6 +720,22 @@ def post_workouts(payload):
     user_id = payload['sub']
     
     try:
+        # ensure name property is present
+        if request.json.get('date') is None:
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: No Date Property Found'
+        # ensure name property is not blank
+        elif request.json.get('date') is '':
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: Date Property Cannot Be Blank'
+        # ensure name property is a string
+        elif type(request.json.get('date')) is not str:
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: Date Property Must Be a String'
+
         # define a new exercise instance
         new_workout = Workout(
             date=request.json.get('date'),
@@ -1091,6 +1102,21 @@ def post_workouts_as_trainer(payload):
     try:
 
         #_workout_template_id_ = request.json.get('workout_template_id')
+        # ensure name property is present
+        if request.json.get('date') is None:
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: No Date Property Found'
+        # ensure name property is not blank
+        elif request.json.get('date') is '':
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: Date Property Cannot Be Blank'
+        # ensure name property is a string
+        elif type(request.json.get('date')) is not str:
+            err['status'] = True
+            err['code'] = 400
+            err['msg'] = 'Bad Request: Date Property Must Be a String'
 
         # define a new workout instance
         new_workout = Workout(
