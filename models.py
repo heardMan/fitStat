@@ -250,7 +250,8 @@ class WorkoutExercise(db.Model):
 
     '''Init Method'''
 
-    def __init__(self, recommended_sets, exercise_template_id, workout_template_id):
+    def __init__(self, recommended_sets,
+    exercise_template_id, workout_template_id):
         self.recommended_sets = recommended_sets
         self.exercise_template_id = exercise_template_id
         self.workout_template_id = workout_template_id

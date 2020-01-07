@@ -66,8 +66,10 @@ def get_token_auth_header():
 def get_access_token():
 
     conn = http.client.HTTPSConnection(AUTH0_DOMAIN)
-    payload = "{\"client_id\":\""+AUTH0_CLIENT_ID+"\",\"client_secret\":\""+AUTH0_CLIENT_SECRET + \
-        "\",\"audience\":\"https://dev-y5wb70ja.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}"
+    payload = "{\"client_id\":\""+AUTH0_CLIENT_ID + \
+        "\",\"client_secret\":\""+AUTH0_CLIENT_SECRET + \
+        "\",\"audience\":\"https://dev-y5wb70ja.auth0.com/api/v2/\",\
+            \"grant_type\":\"client_credentials\"}"
 
     headers = {'content-type': "application/json"}
     conn.request("POST", "/oauth/token", payload, headers)
@@ -179,7 +181,7 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description': 'Incorrect claims. Check audience/issuer.'
             }, 401)
         except Exception:
             raise AuthError({

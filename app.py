@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
     setup_db(app)
-    #seed_db()
+    # seed_db()
 
 CORS(app)
 
