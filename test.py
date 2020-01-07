@@ -4,7 +4,10 @@ import unittest
 import http.client
 from app import app
 from flask_sqlalchemy import SQLAlchemy
-from models import setup_db, seed_db, test_database_path, Exercise_Template, Workout_Template
+from models import (
+    setup_db, seed_db, test_database_path,
+    ExerciseTemplate, WorkoutTemplate
+)
 
 TEST_CLIENT_TOKEN = os.getenv("TEST_CLIENT_TOKEN")
 TEST_TRAINER_TOKEN = os.getenv("TEST_TRAINER_TOKEN")
@@ -35,15 +38,11 @@ class APITestCase(unittest.TestCase):
         # with self.app.app_context():
         #     self.db = SQLAlchemy()
         #     self.db.init_app(self.app)
-            # create all tables
-            #self.db.create_all()
-            
-
-    
+        # create all tables
+        # self.db.create_all()
 
     def test_get_exercise_templates(self):
         """Test the get exercise templates route"""
-        
 
         """Test Authentication"""
 
@@ -55,7 +54,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/exercise_templates', headers=self.client_headers)
+        client_get = self.client().get(
+            '/exercise_templates', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -65,7 +65,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_get = self.client().get('/exercise_templates', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/exercise_templates', headers=self.trainer_headers)
         trainer_data = trainer_get.json
 
         self.assertEqual(trainer_get.status_code, 200)
@@ -86,7 +87,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/exercise_templates/1', headers=self.client_headers)
+        client_get = self.client().get(
+            '/exercise_templates/1', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -124,8 +126,10 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_post = self.client().post('/exercise_templates',
-                                         json=test_exercise, headers=self.client_headers)
+        client_post = self.client().post(
+            '/exercise_templates',
+            json=test_exercise,
+            headers=self.client_headers)
         client_data = client_post.json
 
         self.assertEqual(client_post.status_code, 403)
@@ -133,8 +137,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_post = self.client().post('/exercise_templates',
-                                          json=test_exercise, headers=self.trainer_headers)
+        trainer_post = self.client().post(
+            '/exercise_templates',
+            json=test_exercise,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_post.json
 
         self.assertEqual(trainer_post.status_code, 200)
@@ -161,8 +168,12 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_patch = self.client().patch('/exercise_templates/1',
-                                           json=test_patch, headers=self.client_headers)
+        client_patch = self.client().patch(
+            '/exercise_templates/1',
+            json=test_patch,
+            headers=self.client_headers
+            )
+
         client_data = client_patch.json
 
         self.assertEqual(client_patch.status_code, 403)
@@ -170,8 +181,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_patch = self.client().patch('/exercise_templates/1',
-                                            json=test_patch, headers=self.trainer_headers)
+        trainer_patch = self.client().patch(
+            '/exercise_templates/1',
+            json=test_patch,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_patch.json
 
         self.assertEqual(trainer_patch.status_code, 200)
@@ -223,7 +237,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/workout_templates', headers=self.client_headers)
+        client_get = self.client().get(
+            '/workout_templates', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -232,7 +247,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_get = self.client().get('/workout_templates', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/workout_templates', headers=self.trainer_headers)
         trainer_data = trainer_get.json
 
         self.assertEqual(trainer_get.status_code, 200)
@@ -253,7 +269,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/workout_templates/1', headers=self.client_headers)
+        client_get = self.client().get(
+            '/workout_templates/1', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -300,8 +317,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_post = self.client().post('/workout_templates',
-                                         json=test_workout, headers=self.client_headers)
+        client_post = self.client().post(
+            '/workout_templates',
+            json=test_workout,
+            headers=self.client_headers
+            )
         client_data = client_post.json
 
         self.assertEqual(client_post.status_code, 403)
@@ -309,8 +329,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_post = self.client().post('/workout_templates', json=test_workout,
-                                          headers=self.trainer_headers)
+        trainer_post = self.client().post(
+            '/workout_templates',
+            json=test_workout,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_post.json
 
         self.assertEqual(trainer_post.status_code, 200)
@@ -356,8 +379,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_patch = self.client().patch('/workout_templates/1',
-                                           json=test_patch, headers=self.client_headers)
+        client_patch = self.client().patch(
+            '/workout_templates/1',
+            json=test_patch,
+            headers=self.client_headers
+            )
         client_data = client_patch.json
 
         self.assertEqual(client_patch.status_code, 403)
@@ -365,8 +391,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_patch = self.client().patch('/workout_templates/1',
-                                            json=test_patch, headers=self.trainer_headers)
+        trainer_patch = self.client().patch(
+            '/workout_templates/1',
+            json=test_patch,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_patch.json
 
         self.assertEqual(trainer_patch.status_code, 200)
@@ -418,7 +447,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/workouts', headers=self.client_headers)
+        client_get = self.client().get(
+            '/workouts', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -427,7 +457,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_get = self.client().get('/workouts', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/workouts', headers=self.trainer_headers)
         trainer_data = trainer_get.json
 
         self.assertEqual(trainer_get.status_code, 200)
@@ -448,7 +479,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_get = self.client().get('/workouts/7', headers=self.client_headers)
+        client_get = self.client().get(
+            '/workouts/7', headers=self.client_headers)
         client_data = client_get.json
 
         self.assertEqual(client_get.status_code, 200)
@@ -457,7 +489,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_get = self.client().get('/workouts/2', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/workouts/2', headers=self.trainer_headers)
         trainer_data = trainer_get.json
 
         self.assertEqual(trainer_get.status_code, 200)
@@ -516,8 +549,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
 
-        client_post = self.client().post('/workouts',
-                                         json=test_workout, headers=self.client_headers)
+        client_post = self.client().post(
+            '/workouts',
+            json=test_workout,
+            headers=self.client_headers
+            )
         client_data = client_post.json
         self.assertEqual(client_post.status_code, 200)
         self.assertEqual(client_data['success'], True)
@@ -525,8 +561,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
 
-        trainer_post = self.client().post('/workouts', json=test_workout,
-                                          headers=self.trainer_headers)
+        trainer_post = self.client().post(
+            '/workouts',
+            json=test_workout,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_post.json
 
         self.assertEqual(trainer_post.status_code, 200)
@@ -576,7 +615,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Authentication"""
 
-        unauthenticated_patch = self.client().patch('/workouts/1', json=test_patch)
+        unauthenticated_patch = self.client().patch(
+            '/workouts/1', json=test_patch)
         unauthenticated_patch_data = unauthenticated_patch.json
 
         self.assertEqual(unauthenticated_patch.status_code, 401)
@@ -584,8 +624,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_patch = self.client().patch('/workouts/7',
-                                           json=test_patch, headers=self.client_headers)
+        client_patch = self.client().patch(
+            '/workouts/7',
+            json=test_patch,
+            headers=self.client_headers
+            )
         client_data = client_patch.json
         # ensure request was good
         self.assertEqual(client_patch.status_code, 200)
@@ -596,7 +639,10 @@ class APITestCase(unittest.TestCase):
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
         trainer_patch = self.client().patch(
-            '/workouts/7', json=test_patch, headers=self.trainer_headers)
+            '/workouts/7',
+            json=test_patch,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_patch.json
 
         # ensure request was good
@@ -618,7 +664,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_delete = self.client().delete('workouts/6', headers=self.trainer_headers)
+        trainer_delete = self.client().delete(
+            'workouts/6', headers=self.trainer_headers)
         trainer_data = trainer_delete.json
         # ensure request was good
         self.assertEqual(trainer_delete.status_code, 403)
@@ -626,7 +673,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_delete = self.client().delete('/workouts/10', headers=self.client_headers)
+        client_delete = self.client().delete(
+            '/workouts/10', headers=self.client_headers)
         client_data = client_delete.json
         # ensure request was good
         self.assertEqual(client_delete.status_code, 200)
@@ -649,7 +697,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_get = self.client().get('/trainer/workouts', headers=self.client_headers)
+        client_get = self.client().get(
+            '/trainer/workouts', headers=self.client_headers)
         client_data = client_get.json
         # ensure request was good
         self.assertEqual(client_get.status_code, 403)
@@ -657,7 +706,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_get = self.client().get('/trainer/workouts', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/trainer/workouts', headers=self.trainer_headers)
         trainer_data = trainer_get.json
         # ensure request was good
         self.assertEqual(trainer_get.status_code, 200)
@@ -679,7 +729,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_get = self.client().get('/trainer/workouts/1', headers=self.client_headers)
+        client_get = self.client().get(
+            '/trainer/workouts/1', headers=self.client_headers)
         client_data = client_get.json
         # ensure request was good
         self.assertEqual(client_get.status_code, 403)
@@ -687,7 +738,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_get = self.client().get('/trainer/workouts/1', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/trainer/workouts/1', headers=self.trainer_headers)
         trainer_data = trainer_get.json
         # ensure request was good
         self.assertEqual(trainer_get.status_code, 200)
@@ -711,7 +763,9 @@ class APITestCase(unittest.TestCase):
         """Test Client Functionality"""
         # test the unauthorized /drinks route
         client_get = self.client().get(
-            '/trainer/workouts-by-user/{}'.format(TEST_CLIENT_USER_ID), headers=self.client_headers)
+            '/trainer/workouts-by-user/{}'.format(TEST_CLIENT_USER_ID),
+            headers=self.client_headers
+            )
         client_data = client_get.json
         # ensure request was good
         self.assertEqual(client_get.status_code, 403)
@@ -720,7 +774,9 @@ class APITestCase(unittest.TestCase):
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
         trainer_get = self.client().get(
-            '/trainer/workouts-by-user/{}'.format(TEST_CLIENT_USER_ID), headers=self.trainer_headers)
+            '/trainer/workouts-by-user/{}'.format(TEST_CLIENT_USER_ID),
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_get.json
         # ensure request was good
         self.assertEqual(trainer_get.status_code, 200)
@@ -781,8 +837,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_post = self.client().post('/trainer/workouts', json=test_workout,
-                                         headers=self.client_headers)
+        client_post = self.client().post(
+            '/trainer/workouts',
+            json=test_workout,
+            headers=self.client_headers
+            )
         client_data = client_post.json
         # ensure request was good
         self.assertEqual(client_post.status_code, 403)
@@ -790,10 +849,12 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_post = self.client().post('/trainer/workouts', json=test_workout,
-                                          headers=self.trainer_headers)
+        trainer_post = self.client().post(
+            '/trainer/workouts',
+            json=test_workout,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_post.json
-        #print('TRAINER_DATA: {}'.format(trainer_data))
         # ensure request was good
         self.assertEqual(trainer_post.status_code, 200)
         self.assertEqual(trainer_data['success'], True)
@@ -854,8 +915,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Client Functionality"""
         # test the unauthorized /drinks route
-        client_patch = self.client().patch('/trainer/workouts/2',
-                                           json=test_patch, headers=self.client_headers)
+        client_patch = self.client().patch(
+            '/trainer/workouts/2',
+            json=test_patch,
+            headers=self.client_headers
+            )
         client_data = client_patch.json
         # ensure request was good
         self.assertEqual(client_patch.status_code, 403)
@@ -863,8 +927,11 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_patch = self.client().patch('/trainer/workouts/2',
-                                            json=test_patch, headers=self.trainer_headers)
+        trainer_patch = self.client().patch(
+            '/trainer/workouts/2',
+            json=test_patch,
+            headers=self.trainer_headers
+            )
         trainer_data = trainer_patch.json
 
         # ensure request was good
@@ -926,7 +993,8 @@ class APITestCase(unittest.TestCase):
 
         """Test Trainer Functionality"""
         # test the unauthorized /drinks route
-        trainer_get = self.client().get('/clients', headers=self.trainer_headers)
+        trainer_get = self.client().get(
+            '/clients', headers=self.trainer_headers)
         trainer_data = trainer_get.json
         # ensure request was good
         self.assertEqual(trainer_get.status_code, 200)

@@ -34,10 +34,10 @@ CREATE TABLE public."Exercise" (
 ALTER TABLE public."Exercise" OWNER TO mark;
 
 --
--- Name: Exercise_Set; Type: TABLE; Schema: public; Owner: mark
+-- Name: ExerciseSet; Type: TABLE; Schema: public; Owner: mark
 --
 
-CREATE TABLE public."Exercise_Set" (
+CREATE TABLE public."ExerciseSet" (
     id integer NOT NULL,
     weight integer,
     repetitions integer,
@@ -46,13 +46,13 @@ CREATE TABLE public."Exercise_Set" (
 );
 
 
-ALTER TABLE public."Exercise_Set" OWNER TO mark;
+ALTER TABLE public."ExerciseSet" OWNER TO mark;
 
 --
--- Name: Exercise_Set_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+-- Name: ExerciseSet_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
 --
 
-CREATE SEQUENCE public."Exercise_Set_id_seq"
+CREATE SEQUENCE public."ExerciseSet_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -61,33 +61,33 @@ CREATE SEQUENCE public."Exercise_Set_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Exercise_Set_id_seq" OWNER TO mark;
+ALTER TABLE public."ExerciseSet_id_seq" OWNER TO mark;
 
 --
--- Name: Exercise_Set_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+-- Name: ExerciseSet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
 --
 
-ALTER SEQUENCE public."Exercise_Set_id_seq" OWNED BY public."Exercise_Set".id;
+ALTER SEQUENCE public."ExerciseSet_id_seq" OWNED BY public."ExerciseSet".id;
 
 
 --
--- Name: Exercise_Template; Type: TABLE; Schema: public; Owner: mark
+-- Name: ExerciseTemplate; Type: TABLE; Schema: public; Owner: mark
 --
 
-CREATE TABLE public."Exercise_Template" (
+CREATE TABLE public."ExerciseTemplate" (
     id integer NOT NULL,
     name character varying NOT NULL,
     description character varying NOT NULL
 );
 
 
-ALTER TABLE public."Exercise_Template" OWNER TO mark;
+ALTER TABLE public."ExerciseTemplate" OWNER TO mark;
 
 --
--- Name: Exercise_Template_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+-- Name: ExerciseTemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
 --
 
-CREATE SEQUENCE public."Exercise_Template_id_seq"
+CREATE SEQUENCE public."ExerciseTemplate_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -96,13 +96,13 @@ CREATE SEQUENCE public."Exercise_Template_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Exercise_Template_id_seq" OWNER TO mark;
+ALTER TABLE public."ExerciseTemplate_id_seq" OWNER TO mark;
 
 --
--- Name: Exercise_Template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+-- Name: ExerciseTemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
 --
 
-ALTER SEQUENCE public."Exercise_Template_id_seq" OWNED BY public."Exercise_Template".id;
+ALTER SEQUENCE public."ExerciseTemplate_id_seq" OWNED BY public."ExerciseTemplate".id;
 
 
 --
@@ -142,10 +142,10 @@ CREATE TABLE public."Workout" (
 ALTER TABLE public."Workout" OWNER TO mark;
 
 --
--- Name: Workout_Exercise; Type: TABLE; Schema: public; Owner: mark
+-- Name: WorkoutExercise; Type: TABLE; Schema: public; Owner: mark
 --
 
-CREATE TABLE public."Workout_Exercise" (
+CREATE TABLE public."WorkoutExercise" (
     id integer NOT NULL,
     recommended_sets integer NOT NULL,
     exercise_template_id integer,
@@ -153,13 +153,13 @@ CREATE TABLE public."Workout_Exercise" (
 );
 
 
-ALTER TABLE public."Workout_Exercise" OWNER TO mark;
+ALTER TABLE public."WorkoutExercise" OWNER TO mark;
 
 --
--- Name: Workout_Exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+-- Name: WorkoutExercise_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
 --
 
-CREATE SEQUENCE public."Workout_Exercise_id_seq"
+CREATE SEQUENCE public."WorkoutExercise_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -168,33 +168,33 @@ CREATE SEQUENCE public."Workout_Exercise_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Workout_Exercise_id_seq" OWNER TO mark;
+ALTER TABLE public."WorkoutExercise_id_seq" OWNER TO mark;
 
 --
--- Name: Workout_Exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+-- Name: WorkoutExercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
 --
 
-ALTER SEQUENCE public."Workout_Exercise_id_seq" OWNED BY public."Workout_Exercise".id;
+ALTER SEQUENCE public."WorkoutExercise_id_seq" OWNED BY public."WorkoutExercise".id;
 
 
 --
--- Name: Workout_Template; Type: TABLE; Schema: public; Owner: mark
+-- Name: WorkoutTemplate; Type: TABLE; Schema: public; Owner: mark
 --
 
-CREATE TABLE public."Workout_Template" (
+CREATE TABLE public."WorkoutTemplate" (
     id integer NOT NULL,
     name character varying NOT NULL,
     description character varying
 );
 
 
-ALTER TABLE public."Workout_Template" OWNER TO mark;
+ALTER TABLE public."WorkoutTemplate" OWNER TO mark;
 
 --
--- Name: Workout_Template_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+-- Name: WorkoutTemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
 --
 
-CREATE SEQUENCE public."Workout_Template_id_seq"
+CREATE SEQUENCE public."WorkoutTemplate_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -203,13 +203,13 @@ CREATE SEQUENCE public."Workout_Template_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Workout_Template_id_seq" OWNER TO mark;
+ALTER TABLE public."WorkoutTemplate_id_seq" OWNER TO mark;
 
 --
--- Name: Workout_Template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
+-- Name: WorkoutTemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mark
 --
 
-ALTER SEQUENCE public."Workout_Template_id_seq" OWNED BY public."Workout_Template".id;
+ALTER SEQUENCE public."WorkoutTemplate_id_seq" OWNED BY public."WorkoutTemplate".id;
 
 
 --
@@ -235,17 +235,6 @@ ALTER SEQUENCE public."Workout_id_seq" OWNED BY public."Workout".id;
 
 
 --
--- Name: alembic_version; Type: TABLE; Schema: public; Owner: mark
---
-
-CREATE TABLE public.alembic_version (
-    version_num character varying(32) NOT NULL
-);
-
-
-ALTER TABLE public.alembic_version OWNER TO mark;
-
---
 -- Name: Exercise id; Type: DEFAULT; Schema: public; Owner: mark
 --
 
@@ -253,17 +242,17 @@ ALTER TABLE ONLY public."Exercise" ALTER COLUMN id SET DEFAULT nextval('public."
 
 
 --
--- Name: Exercise_Set id; Type: DEFAULT; Schema: public; Owner: mark
+-- Name: ExerciseSet id; Type: DEFAULT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Exercise_Set" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_Set_id_seq"'::regclass);
+ALTER TABLE ONLY public."ExerciseSet" ALTER COLUMN id SET DEFAULT nextval('public."ExerciseSet_id_seq"'::regclass);
 
 
 --
--- Name: Exercise_Template id; Type: DEFAULT; Schema: public; Owner: mark
+-- Name: ExerciseTemplate id; Type: DEFAULT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Exercise_Template" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_Template_id_seq"'::regclass);
+ALTER TABLE ONLY public."ExerciseTemplate" ALTER COLUMN id SET DEFAULT nextval('public."ExerciseTemplate_id_seq"'::regclass);
 
 
 --
@@ -274,17 +263,17 @@ ALTER TABLE ONLY public."Workout" ALTER COLUMN id SET DEFAULT nextval('public."W
 
 
 --
--- Name: Workout_Exercise id; Type: DEFAULT; Schema: public; Owner: mark
+-- Name: WorkoutExercise id; Type: DEFAULT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Exercise" ALTER COLUMN id SET DEFAULT nextval('public."Workout_Exercise_id_seq"'::regclass);
+ALTER TABLE ONLY public."WorkoutExercise" ALTER COLUMN id SET DEFAULT nextval('public."WorkoutExercise_id_seq"'::regclass);
 
 
 --
--- Name: Workout_Template id; Type: DEFAULT; Schema: public; Owner: mark
+-- Name: WorkoutTemplate id; Type: DEFAULT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Template" ALTER COLUMN id SET DEFAULT nextval('public."Workout_Template_id_seq"'::regclass);
+ALTER TABLE ONLY public."WorkoutTemplate" ALTER COLUMN id SET DEFAULT nextval('public."WorkoutTemplate_id_seq"'::regclass);
 
 
 --
@@ -316,10 +305,10 @@ COPY public."Exercise" (id, exercise_template_id, workout_id) FROM stdin;
 
 
 --
--- Data for Name: Exercise_Set; Type: TABLE DATA; Schema: public; Owner: mark
+-- Data for Name: ExerciseSet; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Exercise_Set" (id, weight, repetitions, rest, exercise_id) FROM stdin;
+COPY public."ExerciseSet" (id, weight, repetitions, rest, exercise_id) FROM stdin;
 1	1	1	1	1
 2	1	1	1	1
 3	1	1	1	2
@@ -364,15 +353,12 @@ COPY public."Exercise_Set" (id, weight, repetitions, rest, exercise_id) FROM std
 
 
 --
--- Data for Name: Exercise_Template; Type: TABLE DATA; Schema: public; Owner: mark
+-- Data for Name: ExerciseTemplate; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Exercise_Template" (id, name, description) FROM stdin;
+COPY public."ExerciseTemplate" (id, name, description) FROM stdin;
 1	bench press	multi-joint chest workout
 2	bent over row	multi-joint back workout
-3	squat	multi-joint leg workout
-4	deadlift	multi-joint leg workout
-5	shoulder press	multi-joint shoulder workout
 \.
 
 
@@ -395,48 +381,37 @@ COPY public."Workout" (id, date, user_id, workout_template_id) FROM stdin;
 
 
 --
--- Data for Name: Workout_Exercise; Type: TABLE DATA; Schema: public; Owner: mark
+-- Data for Name: WorkoutExercise; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Workout_Exercise" (id, recommended_sets, exercise_template_id, workout_template_id) FROM stdin;
+COPY public."WorkoutExercise" (id, recommended_sets, exercise_template_id, workout_template_id) FROM stdin;
 1	5	1	2
 2	5	2	2
-3	5	3	3
-4	5	4	3
 \.
 
 
 --
--- Data for Name: Workout_Template; Type: TABLE DATA; Schema: public; Owner: mark
+-- Data for Name: WorkoutTemplate; Type: TABLE DATA; Schema: public; Owner: mark
 --
 
-COPY public."Workout_Template" (id, name, description) FROM stdin;
+COPY public."WorkoutTemplate" (id, name, description) FROM stdin;
 1	custom workout	a blank workout template used for custom workouts
 2	workout one	a good chest workout
-3	workout two	a good leg workout
 \.
 
 
 --
--- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: mark
+-- Name: ExerciseSet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-COPY public.alembic_version (version_num) FROM stdin;
-\.
-
-
---
--- Name: Exercise_Set_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
---
-
-SELECT pg_catalog.setval('public."Exercise_Set_id_seq"', 40, true);
+SELECT pg_catalog.setval('public."ExerciseSet_id_seq"', 40, true);
 
 
 --
--- Name: Exercise_Template_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+-- Name: ExerciseTemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-SELECT pg_catalog.setval('public."Exercise_Template_id_seq"', 5, true);
+SELECT pg_catalog.setval('public."ExerciseTemplate_id_seq"', 2, true);
 
 
 --
@@ -447,17 +422,17 @@ SELECT pg_catalog.setval('public."Exercise_id_seq"', 20, true);
 
 
 --
--- Name: Workout_Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+-- Name: WorkoutExercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-SELECT pg_catalog.setval('public."Workout_Exercise_id_seq"', 4, true);
+SELECT pg_catalog.setval('public."WorkoutExercise_id_seq"', 2, true);
 
 
 --
--- Name: Workout_Template_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
+-- Name: WorkoutTemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mark
 --
 
-SELECT pg_catalog.setval('public."Workout_Template_id_seq"', 3, true);
+SELECT pg_catalog.setval('public."WorkoutTemplate_id_seq"', 2, true);
 
 
 --
@@ -468,19 +443,19 @@ SELECT pg_catalog.setval('public."Workout_id_seq"', 10, true);
 
 
 --
--- Name: Exercise_Set Exercise_Set_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+-- Name: ExerciseSet ExerciseSet_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Exercise_Set"
-    ADD CONSTRAINT "Exercise_Set_pkey" PRIMARY KEY (id);
+ALTER TABLE ONLY public."ExerciseSet"
+    ADD CONSTRAINT "ExerciseSet_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: Exercise_Template Exercise_Template_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+-- Name: ExerciseTemplate ExerciseTemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Exercise_Template"
-    ADD CONSTRAINT "Exercise_Template_pkey" PRIMARY KEY (id);
+ALTER TABLE ONLY public."ExerciseTemplate"
+    ADD CONSTRAINT "ExerciseTemplate_pkey" PRIMARY KEY (id);
 
 
 --
@@ -492,19 +467,19 @@ ALTER TABLE ONLY public."Exercise"
 
 
 --
--- Name: Workout_Exercise Workout_Exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+-- Name: WorkoutExercise WorkoutExercise_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Exercise"
-    ADD CONSTRAINT "Workout_Exercise_pkey" PRIMARY KEY (id);
+ALTER TABLE ONLY public."WorkoutExercise"
+    ADD CONSTRAINT "WorkoutExercise_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: Workout_Template Workout_Template_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+-- Name: WorkoutTemplate WorkoutTemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Template"
-    ADD CONSTRAINT "Workout_Template_pkey" PRIMARY KEY (id);
+ALTER TABLE ONLY public."WorkoutTemplate"
+    ADD CONSTRAINT "WorkoutTemplate_pkey" PRIMARY KEY (id);
 
 
 --
@@ -516,19 +491,11 @@ ALTER TABLE ONLY public."Workout"
 
 
 --
--- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: mark
+-- Name: ExerciseSet ExerciseSet_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public.alembic_version
-    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
-
-
---
--- Name: Exercise_Set Exercise_Set_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
---
-
-ALTER TABLE ONLY public."Exercise_Set"
-    ADD CONSTRAINT "Exercise_Set_exercise_id_fkey" FOREIGN KEY (exercise_id) REFERENCES public."Exercise"(id);
+ALTER TABLE ONLY public."ExerciseSet"
+    ADD CONSTRAINT "ExerciseSet_exercise_id_fkey" FOREIGN KEY (exercise_id) REFERENCES public."Exercise"(id);
 
 
 --
@@ -536,7 +503,7 @@ ALTER TABLE ONLY public."Exercise_Set"
 --
 
 ALTER TABLE ONLY public."Exercise"
-    ADD CONSTRAINT "Exercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."Exercise_Template"(id);
+    ADD CONSTRAINT "Exercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."ExerciseTemplate"(id);
 
 
 --
@@ -548,19 +515,19 @@ ALTER TABLE ONLY public."Exercise"
 
 
 --
--- Name: Workout_Exercise Workout_Exercise_exercise_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+-- Name: WorkoutExercise WorkoutExercise_exercise_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Exercise"
-    ADD CONSTRAINT "Workout_Exercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."Exercise_Template"(id);
+ALTER TABLE ONLY public."WorkoutExercise"
+    ADD CONSTRAINT "WorkoutExercise_exercise_template_id_fkey" FOREIGN KEY (exercise_template_id) REFERENCES public."ExerciseTemplate"(id);
 
 
 --
--- Name: Workout_Exercise Workout_Exercise_workout_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
+-- Name: WorkoutExercise WorkoutExercise_workout_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mark
 --
 
-ALTER TABLE ONLY public."Workout_Exercise"
-    ADD CONSTRAINT "Workout_Exercise_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."Workout_Template"(id);
+ALTER TABLE ONLY public."WorkoutExercise"
+    ADD CONSTRAINT "WorkoutExercise_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."WorkoutTemplate"(id);
 
 
 --
@@ -568,7 +535,7 @@ ALTER TABLE ONLY public."Workout_Exercise"
 --
 
 ALTER TABLE ONLY public."Workout"
-    ADD CONSTRAINT "Workout_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."Workout_Template"(id);
+    ADD CONSTRAINT "Workout_workout_template_id_fkey" FOREIGN KEY (workout_template_id) REFERENCES public."WorkoutTemplate"(id);
 
 
 --

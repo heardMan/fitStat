@@ -15,17 +15,20 @@ API_AUDIENCE = os.getenv("API_AUDIENCE")
 AUTH0_CLIENT_ID = os.getenv("AUTH0_CLIENT_ID")
 AUTH0_CLIENT_SECRET = os.getenv("AUTH0_CLIENT_SECRET")
 
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
-## Auth Header
+# Auth Header
+
 
 def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header
@@ -59,14 +62,14 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
+
 def get_access_token():
 
     conn = http.client.HTTPSConnection(AUTH0_DOMAIN)
-    payload = "{\"client_id\":\""+AUTH0_CLIENT_ID+"\",\"client_secret\":\""+AUTH0_CLIENT_SECRET+"\",\"audience\":\"https://dev-y5wb70ja.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}"
+    payload = "{\"client_id\":\""+AUTH0_CLIENT_ID+"\",\"client_secret\":\""+AUTH0_CLIENT_SECRET + \
+        "\",\"audience\":\"https://dev-y5wb70ja.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}"
 
-    #payload = "{\"client_id\":\"S7ORv8rcmt3O07MbKT8uSu5cfffYV9Kj\",\"client_secret\":\"tvLKzRTAJVeDkFATZqJmPBtUAcZMACKFZ_HxEtGKnt5EhyQjuLE1LcfuZ7LAtWNH\",\"audience\":\"fitStat\",\"grant_type\":\"client_credentials\"}"
-
-    headers = { 'content-type': "application/json" }
+    headers = {'content-type': "application/json"}
     conn.request("POST", "/oauth/token", payload, headers)
     res = conn.getresponse()
     data = res.read()
@@ -74,10 +77,11 @@ def get_access_token():
 
     return json.loads(data.decode("utf-8"))['access_token']
 
+
 def get_role_id(role_name):
     token = get_access_token()
     conn = http.client.HTTPSConnection(AUTH0_DOMAIN)
-    headers = { "authorization": "Bearer {}".format(token) }
+    headers = {"authorization": "Bearer {}".format(token)}
     conn.request("GET", "/api/v2/roles", headers=headers)
     res = conn.getresponse()
     data = res.read()
@@ -88,20 +92,23 @@ def get_role_id(role_name):
         if role['name'] == role_name:
             return(role['id'])
 
+
 def get_fitStat_clients():
 
     token = get_access_token()
-    #make clients and change this to clients
+    # make clients and change this to clients
     client_role_id = get_role_id("fitStat-Client")
     conn = http.client.HTTPSConnection(AUTH0_DOMAIN)
-    headers = { "authorization": "Bearer {}".format(token) }
-    conn.request("GET", "/api/v2/roles/{}/users".format(client_role_id), headers=headers)
+    headers = {"authorization": "Bearer {}".format(token)}
+    conn.request(
+        "GET", "/api/v2/roles/{}/users".format(
+            client_role_id), headers=headers)
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data.decode("utf-8"))
     conn.close()
 
-    client_list=[]
+    client_list = []
 
     for user in json_data:
         user_obj = {
@@ -111,8 +118,8 @@ def get_fitStat_clients():
         }
         client_list.append(user_obj)
 
-    
     return client_list
+
 
 def check_permissions(permissions, payload):
     '''this is a test payload with no permissions property'''
@@ -124,11 +131,12 @@ def check_permissions(permissions, payload):
     #     'exp': 1571624280,
     #     'azp': '4KLyPcC6GX5yKHM7fPByy6uOAej4mnsW',
     #     'scope': ''}
-    
+
     if payload.get('permissions') is not None:
         for permission in permissions:
             if permission not in payload['permissions']:
                 abort(403)
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -179,31 +187,32 @@ def verify_decode_jwt(token):
                 'description': 'Unable to parse authentication token.'
             }, 400)
     raise AuthError({
-                'code': 'invalid_header',
+        'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
-            }, 400)
+    }, 400)
+
 
 def requires_auth(permission=[]):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            
+
             try:
                 token = get_token_auth_header()
 
-                #print(token)
-                
+                # print(token)
+
                 payload = verify_decode_jwt(token)
-                #print(payload)
+                # print(payload)
 
                 check_permissions(permission, payload)
 
             except AuthError as err:
-                #print(err)
-                #print(err.status_code)
+                # print(err)
+                # print(err.status_code)
 
                 abort(401, err.error)
-            
+
             return f(payload, *args, **kwargs)
 
         return wrapper

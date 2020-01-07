@@ -5,9 +5,18 @@ import http.client
 
 from sqlalchemy import exc
 from flask_cors import CORS
-from flask import Flask, request, Response, jsonify, abort, make_response, send_from_directory, render_template
-from models import setup_db, seed_db, db_rollback, db_close, Exercise_Template, Workout_Template, Workout_Exercise, Exercise, Workout, Exercise_Set
-from auth import requires_auth, get_access_token, get_role_id, get_fitStat_clients
+from flask import (
+    Flask, request, Response, jsonify,
+    abort, make_response, send_from_directory, render_template
+)
+from models import (
+    setup_db, seed_db, db_rollback, db_close, ExerciseTemplate,
+    WorkoutTemplate, WorkoutExercise, Exercise, Workout, ExerciseSet
+)
+from auth import (
+    requires_auth, get_access_token,
+    get_role_id, get_fitStat_clients
+)
 from settings import setup_environment
 
 # set up envoironment variables in from the .env file if there is one
@@ -18,12 +27,13 @@ app = Flask(__name__)
 
 if app.config.get("SQLALCHEMY_DATABASE_URI") is None:
     setup_db(app)
-    # seed_db()
+    #seed_db()
 
 CORS(app)
 
 
-# this function handles internal server error that result from bad database transactions
+# this function handles internal server error
+# that results from bad database transactions
 def internal_error(err):
     # set error object properties
     err["status"] = True
@@ -39,10 +49,11 @@ def internal_error(err):
 
 
 def check_error(err):
-    if err["status"] == True:
+    if err["status"] is True:
         abort(err["code"], description=err['msg'])
 
-# this is a simple route for testing purposes-- I plan to possibly host some documentation here eventually
+# this is a simple route for testing purposes
+# I plan to possibly host some documentation here eventually
 @app.route("/", methods=["GET"])
 def hello_world():
 
@@ -64,7 +75,7 @@ def get_exercises(payload):
 
     try:
         # query the database for all exercise templates
-        query = Exercise_Template.query.all()
+        query = ExerciseTemplate.query.all()
         # if no templates are found send the user a 404 error
         if query is None:
             err['status'] = True
@@ -74,7 +85,7 @@ def get_exercises(payload):
             # create a comprhension from the query
             exercises = [exercise.long() for exercise in query]
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -100,7 +111,7 @@ def get_exercise_by_id(payload, exercise_template_id):
     }
 
     try:
-        exercise_template = Exercise_Template.query.get(exercise_template_id)
+        exercise_template = ExerciseTemplate.query.get(exercise_template_id)
 
         # if no templates are found send the user a 404 error
         if exercise_template is None:
@@ -108,7 +119,7 @@ def get_exercise_by_id(payload, exercise_template_id):
             err['code'] = 404
             err['msg'] = 'Resource not found'
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -166,14 +177,14 @@ def post_exercises(payload):
 
         else:
             # define a new exercise instance
-            new_exercise = Exercise_Template(
+            new_exercise = ExerciseTemplate(
                 name=request.json.get('name'),
                 description=request.json.get('description')
             )
             # insert the instance to the database
             new_exercise.insert()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -201,7 +212,7 @@ def patch_exercises(payload, exercise_template_id):
     }
 
     try:
-        exercise = Exercise_Template.query.get(exercise_template_id)
+        exercise = ExerciseTemplate.query.get(exercise_template_id)
         # if no template is found send the user a 404 error
         if exercise is None:
             err['status'] = True
@@ -246,7 +257,7 @@ def patch_exercises(payload, exercise_template_id):
                 # updated the instance in the database
                 exercise.update()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -262,7 +273,12 @@ def patch_exercises(payload, exercise_template_id):
 
 
 """allow user to delete an exercise template in the database"""
-@app.route('/exercise_templates/<int:exercise_template_id>', methods=['DELETE'])
+
+
+@app.route(
+    '/exercise_templates/<int:exercise_template_id>',
+    methods=['DELETE']
+)
 @requires_auth(['delete:exercise_templates'])
 def delete_exercises(payload, exercise_template_id):
     # set custom error object
@@ -274,7 +290,7 @@ def delete_exercises(payload, exercise_template_id):
 
     try:
         # query for the exercise template
-        exercise_template = Exercise_Template.query.get(exercise_template_id)
+        exercise_template = ExerciseTemplate.query.get(exercise_template_id)
         # if no template is found send the user a 404 error
         if exercise_template is None:
             err['status'] = True
@@ -282,12 +298,14 @@ def delete_exercises(payload, exercise_template_id):
             err['msg'] = 'Resource not found'
         else:
             # query all the exercise references tied to the workout templates
-            workout_exercises = Workout_Exercise.query.filter_by(exercise_template_id=exercise_template_id).all()
+            workout_exercises = WorkoutExercise.query.filter_by(
+                exercise_template_id=exercise_template_id).all()
             # delete all the exercise references tied to the workout instances
             for workout_exercise in workout_exercises:
                 workout_exercise.delete()
             # query all the exercise references tied to the workout instances
-            exercises = Exercise.query.filter_by(exercise_template_id=exercise_template_id).all()
+            exercises = Exercise.query.filter_by(
+                exercise_template_id=exercise_template_id).all()
             # query all the exercise references tied to the workout instances
             for exercise in exercises:
                 exercise.delete()
@@ -295,7 +313,7 @@ def delete_exercises(payload, exercise_template_id):
             # delete the exercise template
             exercise_template.delete()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -323,7 +341,7 @@ def get_workout_templates(payload):
 
     try:
         # query the database for all the workout templates
-        query = Workout_Template.query.all()
+        query = WorkoutTemplate.query.all()
         # if no templates are found send the user a 404 error
         if query is None:
             err['status'] = True
@@ -332,7 +350,7 @@ def get_workout_templates(payload):
         else:
             # create a formatted list to send as a response
             workouts = [workout.long() for workout in query]
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -358,14 +376,14 @@ def get_workout_template_by_id(payload, workout_template_id):
 
     try:
         # query the database for the specified template
-        workout_template = Workout_Template.query.get(workout_template_id)
+        workout_template = WorkoutTemplate.query.get(workout_template_id)
         # if no templates is found send the user a 404 error
         if workout_template is None:
             err['status'] = True
             err['code'] = 404
             err['msg'] = 'Resource not found'
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -423,10 +441,10 @@ def post_workout_templates(payload):
             err['status'] = True
             err['code'] = 400
             err['msg'] = 'Bad Request: No Name Property Found'
-        
+
         else:
             # define new workout template instance
-            new_workout_template = Workout_Template(
+            new_workout_template = WorkoutTemplate(
                 name=request.json.get('name'),
                 description=request.json.get('description')
             )
@@ -436,7 +454,7 @@ def post_workout_templates(payload):
             # define new workout template instance
             for exercise in request.json.get('exercises'):
                 # define new workout exercise instance
-                new_workout_template_exercise = Workout_Exercise(
+                new_workout_template_exercise = WorkoutExercise(
                     recommended_sets=exercise['recommended_sets'],
                     exercise_template_id=exercise['exercise_template_id'],
                     workout_template_id=new_workout_template.id
@@ -444,7 +462,7 @@ def post_workout_templates(payload):
                 # insert the new workout exercise instance into the database
                 new_workout_template_exercise.insert()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -472,7 +490,7 @@ def patch_workout_templates(payload, workout_template_id):
 
     try:
         # query the database for the specified workout template
-        workout = Workout_Template.query.get(workout_template_id)
+        workout = WorkoutTemplate.query.get(workout_template_id)
 
         # ensure name property is present
         if workout is None:
@@ -514,20 +532,24 @@ def patch_workout_templates(payload, workout_template_id):
 
             # set the workout template name to user input
             workout.name = request.json.get('name')
-            # set the workout template description to user input 
+            # set the workout template description to user input
             workout.description = request.json.get('description')
             # update workout template in the database
             workout.update()
-            # make a list of exercises included in the list of exercises provided by the user
-            patched_exercises = [exercise.get('id') for exercise in request.json.get('exercises')]
+            # make a list of exercises
+            # included in the list of exercises provided by the user
+            patched_exercises = [exercise.get(
+                'id') for exercise in request.json.get('exercises')]
 
-            # loop through the exercise list 
-            # this portion of code is responsible for adding new exercises to a workout template
+            # loop through the exercise list
+            # this portion of code is responsible for
+            # adding new exercises to a workout template
             for exercise in request.json.get('exercises'):
-                #if the exercise does not have an id property it will be considered a new exercise
-                if exercise.get('id') == None:
+                # if the exercise does not have an id property
+                # it will be considered a new exercise
+                if exercise.get('id') is None:
                     # define a new workout exercise instance
-                    new_exercise = Workout_Exercise(
+                    new_exercise = WorkoutExercise(
                         recommended_sets=exercise['recommended_sets'],
                         exercise_template_id=exercise['exercise_template_id'],
                         workout_template_id=workout.id
@@ -538,10 +560,11 @@ def patch_workout_templates(payload, workout_template_id):
                     patched_exercises.append(new_exercise.id)
 
             # loop through the workout exercises in the original model
-            # this portion of code is responsible for editing and removing exercises to a workout template
+            # this portion of code is responsible for
+            # editing and removing exercises to a workout template
             for exercise in workout.exercises:
                 # get the instance currently in the database
-                patch_exercise = Workout_Exercise.query.get(exercise.id)
+                patch_exercise = WorkoutExercise.query.get(exercise.id)
 
                 # if the exercise is in the list the it should be edited
                 if exercise.id in patched_exercises:
@@ -550,18 +573,21 @@ def patch_workout_templates(payload, workout_template_id):
                         # find the matching exercise
                         if _exercise_.get('id') == exercise.id:
                             # update the recommended sets property
-                            patch_exercise.recommended_sets = _exercise_.get('recommended_sets')
+                            patch_exercise.recommended_sets = _exercise_.get(
+                                'recommended_sets')
                             # update the exercise template ID
-                            patch_exercise.exercise_template_id = _exercise_.get('exercise_template_id')
+                            patch_exercise.exercise_template_id = (
+                                _exercise_.get('exercise_template_id'))
                             # update the exercise instance
                             patch_exercise.update()
 
-                # if the exercise ID is not in the patched exercise list then it should be deleted
+                # if the exercise ID is not in the patched exercise list
+                # then it should be deleted
                 if exercise.id not in patched_exercises:
                     # delete the exercise from the database
                     patch_exercise.delete()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -590,7 +616,7 @@ def delete_workout_templates(payload, workout_template_id):
 
     try:
         # query the database for the sppecified workout
-        workout = Workout_Template.query.get(workout_template_id)
+        workout = WorkoutTemplate.query.get(workout_template_id)
         # if no workout is found send the user a 404 error
         if workout is None:
             err['status'] = True
@@ -605,15 +631,16 @@ def delete_workout_templates(payload, workout_template_id):
                 exercise.delete()
 
             # query for all the workouts in the database
-            workouts = Workout.query.filter_by(workout_template_id=workout_template_id).all()
-        
+            workouts = Workout.query.filter_by(
+                workout_template_id=workout_template_id).all()
+
             for work_out in workouts:
                 # delete the workout instances from the database
                 work_out.delete()
-            #delete the workout template instance
+            # delete the workout template instance
             workout.delete()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -643,17 +670,19 @@ def get_workouts(payload):
     user_id = payload['sub']
 
     try:
-        # query the database for all Workouts with the user id equal to the user id in the JWT payload
+        # query the database for all Workouts with the user id
+        # equal to the user id in the JWT payload
         query = Workout.query.filter_by(user_id=user_id).all()
         # create list of workouts to send in the response
         workouts = [workout.long() for workout in query]
         # check each workout to make sure the user has access to that workout
         for workout in workouts:
-            # the user should only have access to their own workouts via this route
+            # the user should only have access to
+            # their own workouts via this route
             if user_id != workout['user_id']:
                 err['status'] = True
                 err['code'] = 403
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -683,17 +712,17 @@ def get_workout_by_id(payload, workout_id):
     try:
         # query the database for a a workout by ID
         workout = Workout.query.get(workout_id)
-        
+
         # if no workout is found send a 404 error to a user
         if workout is None:
             err['status'] = True
             err['code'] = 404
 
-        # if no workout is found send a 403 error to a user 
+        # if no workout is found send a 403 error to a user
         if user_id != workout.user_id:
             err['status'] = True
             err['code'] = 403
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -718,7 +747,7 @@ def post_workouts(payload):
     }
     # set variable to userID from payload
     user_id = payload['sub']
-    
+
     try:
         # ensure name property is present
         if request.json.get('date') is None:
@@ -743,9 +772,9 @@ def post_workouts(payload):
                 user_id=user_id,
                 workout_template_id=request.json.get('workout_template_id')
             )
-            #insert a new exercise instance into the database
+            # insert a new exercise instance into the database
             new_workout.insert()
-            # 
+            #
             for exercise in request.json.get('exercises'):
 
                 new_exercise = Exercise(
@@ -754,14 +783,14 @@ def post_workouts(payload):
                 )
                 new_exercise.insert()
                 for exercise_set in exercise['exercise_sets']:
-                    new_exercise_set = Exercise_Set(
+                    new_exercise_set = ExerciseSet(
                         weight=exercise_set['weight'],
                         repetitions=exercise_set['repetitions'],
                         rest=exercise_set['rest'],
                         exercise_id=new_exercise.id
                     )
                     new_exercise_set.insert()
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -801,13 +830,16 @@ def patch_workouts(payload, workout_id):
             # update the date property of the workout
             workout.date = request.json.get('date')
             # update the associated workout template
-            workout.workout_template_id = request.json.get('workout_template_id')
+            workout.workout_template_id = request.json.get(
+                'workout_template_id')
             # update the instance in the database
             workout.update()
             # create a list of all exerises included the specified workout
-            patched_exercises = [exercise.get('id') for exercise in request.json.get('exercises')]
+            patched_exercises = [exercise.get(
+                'id') for exercise in request.json.get('exercises')]
 
-            # check to see if there are any new exercises and add them to the database
+            # check to see if there are any new exercises
+            # and add them to the database
             for exercise in request.json.get('exercises'):
                 # if the exercise has no ID then it is new exercise
                 if exercise.get('id') is None:
@@ -822,10 +854,11 @@ def patch_workouts(payload, workout_id):
                     # add the exercise ID to the patched exercises list
                     patched_exercises.append(new_exercise.id)
 
-                    # if the exercise is new we must also add sets for the workout exercise
+                    # if the exercise is new we must also
+                    # add sets for the workout exercise
                     for exercise_set in exercise['exercise_sets']:
                         # define a exercise set instance
-                        new_set = Exercise_Set(
+                        new_set = ExerciseSet(
                             weight=exercise_set['weight'],
                             repetitions=exercise_set['repetitions'],
                             rest=exercise_set['rest'],
@@ -839,82 +872,109 @@ def patch_workouts(payload, workout_id):
                     # find the workout exercise instance in the database
                     patch_exercise = Exercise.query.get(exercise.get('id'))
 
-                    # create a list of exercises in the original workout instance
+                    # create a list of exercises
+                    # in the original workout instance
                     oringial_exercise_ids = [a.id for a in workout.exercises]
 
-                    # check each exercise ID 
+                    # check each exercise ID
                     for exercise_id in oringial_exercise_ids:
 
-                        # if the exercise ID is not in the patched exercises list then it should be deleted
+                        # if the exercise ID is not
+                        # in the patched exercises list
+                        # then it should be deleted
                         if exercise_id not in patched_exercises:
 
                             # find the exercise instance in the database
                             delete_exercise = Exercise.query.get(exercise_id)
 
-                            # loop through the list of exercise sets 
-                            for old_exercise_set in delete_exercise.exercise_sets:
-                                # query database for set instance 
-                                delete_exercise_set = Exercise_Set.query.get(old_exercise_set.id)
+                            # loop through the list of exercise sets
+                            delete_list = delete_exercise.exercise_sets
+                            for old_exercise_set in delete_list:
+                                # query database for set instance
+                                delete_exercise_set = ExerciseSet.query.get(
+                                    old_exercise_set.id)
                                 # delete set instance in the database
                                 delete_exercise_set.delete()
 
                             # delete the workout exercise in the database
                             delete_exercise.delete()
-                    
-                    # if the exercise ID is in the patched exercises list then it should be updated
+
+                    # if the exercise ID is in the patched exercises list
+                    # then it should be updated
                     if patch_exercise.id in patched_exercises:
                         # update the exercise template ID property
-                        patch_exercise.exercise_template_id = exercise['exercise_template_id']
+                        patch_exercise.exercise_template_id = (
+                            exercise['exercise_template_id'])
                         # update the exercise instance in the database
                         patch_exercise.update()
 
-                        # create a list of the set in the exercise IDs sent with the request
-                        patched_sets = [_exercise_set_.get('id') for _exercise_set_ in exercise.get('exercise_sets')]
+                        # create a list of the set in the
+                        # exercise IDs sent with the request
+                        patched_sets = [_exercise_set_.get(
+                            'id') for _exercise_set_ in exercise.get(
+                                'exercise_sets')]
 
                         # loop through each set in the list
                         for exercise_set in exercise.get('exercise_sets'):
 
-                            # if there is no exercise property then we will consider this a new exercise
+                            # if there is no exercise property
+                            # then we will consider this a new exercise
                             if exercise_set.get('id') is None:
                                 # define a new exercise set
-                                new_exercise_set = Exercise_Set(
+                                new_exercise_set = ExerciseSet(
                                     weight=exercise_set['weight'],
                                     repetitions=exercise_set['repetitions'],
                                     rest=exercise_set['rest'],
                                     exercise_id=patch_exercise.id
                                 )
-                                # insert the new exercise set in the the database
+                                # insert the new exercise
+                                # set in the the database
                                 new_exercise_set.insert()
 
                             else:
-                                # query the database for the original workout exercise instance
-                                patch_exercise_set = Exercise_Set.query.get(exercise_set.get('id'))
-                                # create a list of the set ID from the original workout exercise instance
-                                original_exercise_sets = [a.id for a in patch_exercise.exercise_sets]
-                                
+                                # query the database for
+                                # the original workout exercise instance
+                                patch_exercise_set = ExerciseSet.query.get(
+                                    exercise_set.get('id'))
+                                # create a list of the set ID from
+                                # the original workout exercise instance
+                                original_exercise_sets = [
+                                    a.id for a in patch_exercise.exercise_sets]
+
                                 # loop through each set
                                 for set_id in original_exercise_sets:
                                     # if the set ID is not in the patched sets
                                     if set_id not in patched_sets:
-                                        # query the database for the original set instance
-                                        delete_set = Exercise_Set.query.get(set_id)
+                                        # query the database
+                                        # for the original set instance
+                                        delete_set = ExerciseSet.query.get(
+                                            set_id)
                                         # delete the exercise set
                                         delete_set.delete()
 
-                                # if the exercise set is in patched sets then it should be updated
+                                # if the exercise set is in
+                                # patched sets then it should be updated
                                 if patch_exercise_set.id in patched_sets:
                                     # update the weight property of the set
-                                    patch_exercise_set.weight = exercise_set['weight']
-                                    # update the repetitions property of the set
-                                    patch_exercise_set.repetitions = exercise_set['repetitions']
-                                    # update the rest property of the set
-                                    patch_exercise_set.rest = exercise_set['rest']
-                                    # update the exercise ID property of the set
-                                    patch_exercise_set.exercise_id = patch_exercise.id
-                                    # update the set instance in the database
+                                    patch_exercise_set.weight = (
+                                        exercise_set['weight'])
+                                    # update the repetitions
+                                    # property of the set
+                                    patch_exercise_set.repetitions = (
+                                        exercise_set['repetitions'])
+                                    # update the rest
+                                    # property of the set
+                                    patch_exercise_set.rest = (
+                                        exercise_set['rest'])
+                                    # update the exercise
+                                    # ID property of the set
+                                    patch_exercise_set.exercise_id = (
+                                        patch_exercise.id)
+                                    # update the set instance
+                                    # in the database
                                     patch_exercise_set.update()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -948,9 +1008,9 @@ def delete_workouts(payload, workout_id):
         workout = Workout.query.get(workout_id)
         # save a instance of the workout to send with the response
         _workout_ = workout.long()
-        
+
         # if no workout is found send the user a 404 error
-        if workout == None:
+        if workout is None:
             err["status"] = True
             err["code"] = 404
 
@@ -965,10 +1025,10 @@ def delete_workouts(payload, workout_id):
                 # query the database for the specified exercise
                 delete_exercise = Exercise.query.get(exercise.id)
 
-                # loop through each exercise set  
+                # loop through each exercise set
                 for exercise_set in delete_exercise.exercise_sets:
                     # query the database for the specified exercise set
-                    delete_set = Exercise_Set.query.get(exercise_set.id)
+                    delete_set = ExerciseSet.query.get(exercise_set.id)
                     # delete the exercise set instance in the database
                     delete_set.delete()
                 # delete the exercise instance in the database
@@ -977,7 +1037,7 @@ def delete_workouts(payload, workout_id):
             # delete the workout instance in the database
             workout.delete()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -1011,7 +1071,7 @@ def get_workouts_as_trainer(payload):
         if query is not None:
             workouts = [workout.long() for workout in query]
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -1044,7 +1104,7 @@ def get_workout_by_id_as_trainer(payload, workout_id):
             err['status'] = True
             err['code'] = 404
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -1075,7 +1135,7 @@ def get_workout_by_user_id_as_trainer(payload, user_id):
         # create a list of workouts to send in the response
         workouts = [workout.long() for workout in query]
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
 
@@ -1102,7 +1162,7 @@ def post_workouts_as_trainer(payload):
 
     try:
 
-        #_workout_template_id_ = request.json.get('workout_template_id')
+        # _workout_template_id_ = request.json.get('workout_template_id')
         # ensure name property is present
         if request.json.get('date') is None:
             err['status'] = True
@@ -1130,17 +1190,18 @@ def post_workouts_as_trainer(payload):
             new_workout.insert()
             # loop through the exercise list in request
             for exercise in request.json.get('exercises'):
-                # define a workout exercise instance for each worout exercise in the rquest
+                # define a workout exercise instance
+                # for each worout exercise in the rquest
                 new_exercise = Exercise(
                     exercise_template_id=exercise['exercise_template_id'],
                     workout_id=new_workout.id
                 )
                 # insert the workout exercise in the database
                 new_exercise.insert()
-                # loop through the sets in each exercise set 
+                # loop through the sets in each exercise set
                 for exercise_set in exercise['exercise_sets']:
                     # define a new exercise set instance in the database
-                    new_exercise_set = Exercise_Set(
+                    new_exercise_set = ExerciseSet(
                         weight=exercise_set['weight'],
                         repetitions=exercise_set['repetitions'],
                         rest=exercise_set['rest'],
@@ -1149,7 +1210,7 @@ def post_workouts_as_trainer(payload):
                     # insert the new exerise instance in the database
                     new_exercise_set.insert()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -1182,19 +1243,22 @@ def patch_workouts_as_trainer(payload, workout_id):
             err['code'] = 404
 
         else:
-            # update the date property 
+            # update the date property
             workout.date = request.json.get('date')
             # update the workout property remplate id
-            workout.workout_template_id = request.json.get('workout_template_id')
+            workout.workout_template_id = request.json.get(
+                'workout_template_id')
             # update the user_id property
             workout.user_id = request.json.get('user_id')
             # update the workout instance in the database
             workout.update()
 
-            # create a list of exercise IDs from the exercise list in the request
-            patched_exercises = [exercise.get('id') for exercise in request.json.get('exercises')]
+            # create a list of exercise IDs
+            # from the exercise list in the request
+            patched_exercises = [exercise.get(
+                'id') for exercise in request.json.get('exercises')]
 
-            # loop through the exercise list loking for new exercises in the 
+            # loop through the exercise list loking for new exercises in the
             for exercise in request.json.get('exercises'):
                 # if the workout exercise has  no ID then it is a new exercise
                 if exercise.get('id') is None:
@@ -1203,14 +1267,15 @@ def patch_workouts_as_trainer(payload, workout_id):
                         exercise_template_id=exercise['exercise_template_id'],
                         workout_id=workout.id
                     )
-                    #insert the exercise instance into the database
+                    # insert the exercise instance into the database
                     new_exercise.insert()
                     # add the new exercise ID to the patched exercise list
                     patched_exercises.append(new_exercise.id)
-                    # loop through the exercise sets in the exercise instance and add each one to the database
+                    # loop through the exercise sets in the
+                    # exercise instance and add each one to the database
                     for exercise_set in exercise['exercise_sets']:
                         # define a new exercise set instance
-                        new_set = Exercise_Set(
+                        new_set = ExerciseSet(
                             weight=exercise_set['weight'],
                             repetitions=exercise_set['repetitions'],
                             rest=exercise_set['rest'],
@@ -1221,7 +1286,8 @@ def patch_workouts_as_trainer(payload, workout_id):
                 else:
                     # if the exercise has an ID query it in the database
                     patch_exercise = Exercise.query.get(exercise.get('id'))
-                    # create a list of the exercise IDs on the original workout instance
+                    # create a list of the exercise IDs
+                    # on the original workout instance
                     oringial_exercise_ids = [a.id for a in workout.exercises]
 
                     # loop through the original exercise IDs
@@ -1233,10 +1299,14 @@ def patch_workouts_as_trainer(payload, workout_id):
                             delete_exercise = Exercise.query.get(exercise_id)
 
                             # loop through the old exercise sets
-                            for old_exercise_set in delete_exercise.exercise_sets:
-                                # query the database for the specified exercise set
-                                delete_exercise_set = Exercise_Set.query.get(old_exercise_set.id)
-                                # delete the exercise set instance in the database
+                            delete_list = delete_exercise.exercise_sets
+                            for old_exercise_set in delete_list:
+                                # query the database for
+                                # the specified exercise set
+                                delete_exercise_set = ExerciseSet.query.get(
+                                    old_exercise_set.id)
+                                # delete the exercise set
+                                # instance in the database
                                 delete_exercise_set.delete()
 
                             # delete the exercise instance in the database
@@ -1244,18 +1314,22 @@ def patch_workouts_as_trainer(payload, workout_id):
                     # if the patched ID is in the patched exercise list
                     if patch_exercise.id in patched_exercises:
                         # update the exercise template ID propertyy
-                        patch_exercise.exercise_template_id = exercise['exercise_template_id']
+                        patch_exercise.exercise_template_id = (
+                            exercise['exercise_template_id'])
                         # updated the exercise instance in the database
                         patch_exercise.update()
-                        # create a list of exercise set IDs 
-                        patched_sets = [_exercise_set_.get('id') for _exercise_set_ in exercise.get('exercise_sets')]
+                        # create a list of exercise set IDs
+                        patched_sets = [_exercise_set_.get(
+                            'id') for _exercise_set_ in exercise.get(
+                                'exercise_sets')]
 
-                        # loop through exercise sets 
+                        # loop through exercise sets
                         for exercise_set in exercise.get('exercise_sets'):
-                            # if the exercise set has  no ID then it is a new exercise
+                            # if the exercise set has
+                            # no ID then it is a new exercise
                             if exercise_set.get('id') is None:
                                 # define a new exercise set instance
-                                new_exercise_set = Exercise_Set(
+                                new_exercise_set = ExerciseSet(
                                     weight=exercise_set['weight'],
                                     repetitions=exercise_set['repetitions'],
                                     rest=exercise_set['rest'],
@@ -1266,31 +1340,43 @@ def patch_workouts_as_trainer(payload, workout_id):
 
                             else:
                                 # query sepcified exercise set in the database
-                                patch_exercise_set = Exercise_Set.query.get(exercise_set.get('id'))
-                                # create a list of exercise sets on the original workout exercise instance
-                                original_exercise_sets = [a.id for a in patch_exercise.exercise_sets]
-                                # loop through ids in the original 
+                                patch_exercise_set = ExerciseSet.query.get(
+                                    exercise_set.get('id'))
+                                # create a list of exercise sets
+                                # on the original workout exercise instance
+                                original_exercise_sets = [
+                                    a.id for a in patch_exercise.exercise_sets]
+                                # loop through ids in the original
                                 for set_id in original_exercise_sets:
-                                    # if the exercise set ID is not in patch sets
+                                    # if the exercise set ID
+                                    # is not in patch sets
                                     if set_id not in patched_sets:
-                                        # query the database for the specified exercise set
-                                        delete_set = Exercise_Set.query.get(set_id)
-                                        # delete the exercise set instance in the database
+                                        # query the database for
+                                        # the specified exercise set
+                                        delete_set = ExerciseSet.query.get(
+                                            set_id)
+                                        # delete the exercise
+                                        # set instance in the database
                                         delete_set.delete()
                                 # if the exercise set ID is in patch sets
                                 if patch_exercise_set.id in patched_sets:
                                     # update the weight property
-                                    patch_exercise_set.weight = exercise_set['weight']
+                                    patch_exercise_set.weight = (
+                                        exercise_set['weight'])
                                     # update the repetitions property
-                                    patch_exercise_set.repetitions = exercise_set['repetitions']
+                                    patch_exercise_set.repetitions = (
+                                        exercise_set['repetitions'])
                                     # update the rest property
-                                    patch_exercise_set.rest = exercise_set['rest']
+                                    patch_exercise_set.rest = (
+                                        exercise_set['rest'])
                                     # update the id property
-                                    patch_exercise_set.exercise_id = patch_exercise.id
-                                    # update the exercise set instance in the database
+                                    patch_exercise_set.exercise_id = (
+                                        patch_exercise.id)
+                                    # update the exercise
+                                    # set instance in the database
                                     patch_exercise_set.update()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -1333,7 +1419,7 @@ def delete_workouts_as_trainer(payload, workout_id):
                 # loop through the exercise set list
                 for exercise_set in delete_exercise.exercise_sets:
                     # query the database for the specified  exercise set
-                    delete_set = Exercise_Set.query.get(exercise_set.id)
+                    delete_set = ExerciseSet.query.get(exercise_set.id)
                     # delte the exrecise set instance in the database
                     delete_set.delete()
                 # delete the exercise instance in the database
@@ -1341,7 +1427,7 @@ def delete_workouts_as_trainer(payload, workout_id):
             # delete the workout instance in the database
             workout.delete()
 
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:
@@ -1368,7 +1454,7 @@ def get_clients(payload):
 
     try:
         clients = get_fitStat_clients()
-    except:
+    except Exception:
         # handle any exception from the database
         internal_error(err)
     finally:

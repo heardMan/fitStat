@@ -1,9 +1,13 @@
 import os
 import json
-from sqlalchemy import Column, Boolean, String, Integer, DateTime, ForeignKey, LargeBinary
+from sqlalchemy import (
+    Column, Boolean,
+    String, Integer,
+    DateTime, ForeignKey,
+    LargeBinary)
 from flask_sqlalchemy import SQLAlchemy
 
-#from settings import SQLALCHEMY_DATABASE_URI as database_path1
+# from settings import SQLALCHEMY_DATABASE_URI as database_path1
 from settings import setup_environment
 
 setup_environment()
@@ -14,75 +18,72 @@ TEST_TRAINER_USER_ID = os.getenv('TEST_TRAINER_USER_ID')
 '''Instantiate a sequel alchemy instance'''
 db = SQLAlchemy()
 
-#database path set as an environment variable
+# database path set as an environment variable
 database_path = os.getenv("DATABASE_URI")
 test_database_path = os.getenv("TEST_DATABASE_URI")
+
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    #db.drop_all()
+    # db.drop_all()
     db.create_all()
+
 
 def db_rollback():
     db.session.rollback()
+
 
 def db_close():
     db.session.close()
 
 
-
-
-
-
 def seed_db():
-    exercise_template_one = Exercise_Template(
+    exercise_template_one = ExerciseTemplate(
         name='bench press',
         description='multi-joint chest workout'
     )
     exercise_template_one.insert()
 
-    exercise_template_two = Exercise_Template(
+    exercise_template_two = ExerciseTemplate(
         name='bent over row',
         description='multi-joint back workout'
     )
     exercise_template_two.insert()
 
-    workout_template_test = Workout_Template(
+    workout_template_test = WorkoutTemplate(
         name='custom workout',
         description='a blank workout template used for custom workouts',
     )
     workout_template_test.insert()
 
-    workout_template_one = Workout_Template(
+    workout_template_one = WorkoutTemplate(
         name='workout one',
         description='a good chest workout',
     )
     workout_template_one.insert()
 
-    workout_template_one_exercise_one=  Workout_Exercise(
+    workout_template_one_exercise_one = WorkoutExercise(
         recommended_sets=5,
         exercise_template_id=exercise_template_one.id,
         workout_template_id=workout_template_one.id
     )
     workout_template_one_exercise_one.insert()
 
-    workout_template_one_exercise_two=  Workout_Exercise(
+    workout_template_one_exercise_two = WorkoutExercise(
         recommended_sets=5,
         exercise_template_id=exercise_template_two.id,
         workout_template_id=workout_template_one.id
     )
     workout_template_one_exercise_two.insert()
 
-
-
-    def create_test_workout(userID,i):
+    def create_test_workout(userID, i):
         workout_one = Workout(
-         date='2019-XX-{}'.format(i),
-         user_id=userID,
-         workout_template_id=workout_template_one.id
+            date='2019-XX-{}'.format(i),
+            user_id=userID,
+            workout_template_id=workout_template_one.id
         )
         workout_one.insert()
 
@@ -92,7 +93,7 @@ def seed_db():
         )
         workout_one_exercise_one.insert()
 
-        workout_one_exercise_one_set_one = Exercise_Set(
+        workout_one_exercise_one_set_one = ExerciseSet(
             weight=1*i,
             repetitions=1*i,
             rest=1*i,
@@ -100,7 +101,7 @@ def seed_db():
         )
         workout_one_exercise_one_set_one.insert()
 
-        workout_one_exercise_one_set_two = Exercise_Set(
+        workout_one_exercise_one_set_two = ExerciseSet(
             weight=1*i,
             repetitions=1*i,
             rest=1*i,
@@ -114,7 +115,7 @@ def seed_db():
         )
         workout_one_exercise_two.insert()
 
-        workout_one_exercise_two_set_one =Exercise_Set(
+        workout_one_exercise_two_set_one = ExerciseSet(
             weight=1*i,
             repetitions=1*i,
             rest=1*i,
@@ -122,7 +123,7 @@ def seed_db():
         )
         workout_one_exercise_two_set_one.insert()
 
-        workout_one_exercise_two_set_two =Exercise_Set(
+        workout_one_exercise_two_set_two = ExerciseSet(
             weight=1*i,
             repetitions=1*i,
             rest=1*i,
@@ -130,41 +131,41 @@ def seed_db():
         )
         workout_one_exercise_two_set_two.insert()
 
-    create_test_workout(TEST_TRAINER_USER_ID,1)
-    create_test_workout(TEST_TRAINER_USER_ID,2)
-    create_test_workout(TEST_TRAINER_USER_ID,3)
-    create_test_workout(TEST_TRAINER_USER_ID,4)
-    create_test_workout(TEST_TRAINER_USER_ID,5)
-    create_test_workout(TEST_CLIENT_USER_ID,6)
-    create_test_workout(TEST_CLIENT_USER_ID,7)
-    create_test_workout(TEST_CLIENT_USER_ID,8)
-    create_test_workout(TEST_CLIENT_USER_ID,9)
-    create_test_workout(TEST_CLIENT_USER_ID,10)
+    create_test_workout(TEST_TRAINER_USER_ID, 1)
+    create_test_workout(TEST_TRAINER_USER_ID, 2)
+    create_test_workout(TEST_TRAINER_USER_ID, 3)
+    create_test_workout(TEST_TRAINER_USER_ID, 4)
+    create_test_workout(TEST_TRAINER_USER_ID, 5)
+    create_test_workout(TEST_CLIENT_USER_ID, 6)
+    create_test_workout(TEST_CLIENT_USER_ID, 7)
+    create_test_workout(TEST_CLIENT_USER_ID, 8)
+    create_test_workout(TEST_CLIENT_USER_ID, 9)
+    create_test_workout(TEST_CLIENT_USER_ID, 10)
 
 
 '''
 EXERCISE TEMPLATE MODEL
 '''
 
-class Exercise_Template(db.Model):
 
-    __tablename__ = 'Exercise_Template'
+class ExerciseTemplate(db.Model):
+
+    __tablename__ = 'ExerciseTemplate'
 
     '''Model Definition'''
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    workout_exercise_instances = db.relationship("Workout_Exercise")
+    workout_exercise_instances = db.relationship("WorkoutExercise")
     exercise_instances = db.relationship("Exercise")
-
 
     '''Init Method'''
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
-        
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
@@ -182,30 +183,31 @@ class Exercise_Template(db.Model):
             'name': self.name,
             'description': self.description
         }
-    
+
+
 '''
 WORKOUT TEMPLATE MODEL
 '''
 
-class Workout_Template(db.Model):
 
-    __tablename__ = 'Workout_Template'
+class WorkoutTemplate(db.Model):
+
+    __tablename__ = 'WorkoutTemplate'
 
     '''Model Definition'''
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String, default='')
-    exercises = db.relationship('Workout_Exercise', backref='Workout_Template')
+    exercises = db.relationship('WorkoutExercise', backref='WorkoutTemplate')
     workout_instances = db.relationship('Workout')
-    
 
     '''Init Method'''
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
-       
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
@@ -226,23 +228,25 @@ class Workout_Template(db.Model):
             'exercises': exercises
         }
 
+
 '''
 WORKOUT EXERCISE MODEL
 '''
-#workout template exercise
+# workout template exercise
 
-class Workout_Exercise(db.Model):
 
-    __tablename__ = 'Workout_Exercise'
+class WorkoutExercise(db.Model):
+
+    __tablename__ = 'WorkoutExercise'
 
     '''Model Definition'''
 
     id = Column(Integer, primary_key=True)
     recommended_sets = Column(Integer, nullable=False)
-    exercise_template_id = Column(Integer, ForeignKey('Exercise_Template.id'))
-    exercise_template = db.relationship("Exercise_Template", back_populates="workout_exercise_instances")
-    workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
-    
+    exercise_template_id = Column(Integer, ForeignKey('ExerciseTemplate.id'))
+    exercise_template = db.relationship(
+        "ExerciseTemplate", back_populates="workout_exercise_instances")
+    workout_template_id = Column(Integer, ForeignKey('WorkoutTemplate.id'))
 
     '''Init Method'''
 
@@ -272,9 +276,11 @@ class Workout_Exercise(db.Model):
             'workout_template_id': self.workout_template_id
         }
 
+
 '''
 USER WORKOUT MODEL
 '''
+
 
 class Workout(db.Model):
 
@@ -284,11 +290,12 @@ class Workout(db.Model):
 
     id = Column(Integer, primary_key=True)
     date = Column(String)
-    #date = Column(DateTime(timezone=False), nullable=False)
+    # date = Column(DateTime(timezone=False), nullable=False)
     exercises = db.relationship('Exercise', backref='Workout')
     user_id = Column(String)
-    workout_template_id = Column(Integer, ForeignKey('Workout_Template.id'))
-    workout_template = db.relationship("Workout_Template", back_populates="workout_instances")
+    workout_template_id = Column(Integer, ForeignKey('WorkoutTemplate.id'))
+    workout_template = db.relationship(
+        "WorkoutTemplate", back_populates="workout_instances")
 
     '''Init Method'''
 
@@ -297,7 +304,6 @@ class Workout(db.Model):
         self.user_id = user_id
         if workout_template_id is not None:
             self.workout_template_id = workout_template_id
-
 
     def insert(self):
         db.session.add(self)
@@ -326,6 +332,7 @@ class Workout(db.Model):
             'workout-template': self.workout_template.long()
         }
 
+
 '''
 USER EXERCISE MODEL
     This model is used to map user work outs to predefined exercises
@@ -334,6 +341,7 @@ USER EXERCISE MODEL
     (one UserExercise maps to many Sets)
 '''
 
+
 class Exercise(db.Model):
 
     __tablename__ = 'Exercise'
@@ -341,10 +349,11 @@ class Exercise(db.Model):
     '''Model Definition'''
 
     id = Column(Integer, primary_key=True)
-    exercise_template_id = Column(Integer, ForeignKey('Exercise_Template.id'))
+    exercise_template_id = Column(Integer, ForeignKey('ExerciseTemplate.id'))
     workout_id = Column(Integer, ForeignKey('Workout.id'))
-    exercise_sets = db.relationship('Exercise_Set', backref='Exercise')
-    exercise_template = db.relationship("Exercise_Template", back_populates="exercise_instances")
+    exercise_sets = db.relationship('ExerciseSet', backref='Exercise')
+    exercise_template = db.relationship(
+        "ExerciseTemplate", back_populates="exercise_instances")
 
     '''Init Method'''
 
@@ -366,12 +375,15 @@ class Exercise(db.Model):
     def long(self):
         return {
             'id': self.id,
-            'name':self.exercise_template.long()['name'],
+            'name': self.exercise_template.long()['name'],
             'description': self.exercise_template.long()['description'],
             'exercise_template_id': self.exercise_template_id,
             'workout_id': self.workout_id,
-            'exercise_sets': [exercise_set.long() for exercise_set in self.exercise_sets]
+            'exercise_sets': [
+                exercise_set.long() for exercise_set in self.exercise_sets
+                ]
         }
+
 
 '''
 SET MODEL
@@ -381,9 +393,10 @@ SET MODEL
     (Many Sets map to One User Exercise)
 '''
 
-class Exercise_Set(db.Model):
 
-    __tablename__ = 'Exercise_Set'
+class ExerciseSet(db.Model):
+
+    __tablename__ = 'ExerciseSet'
 
     '''Model Definition'''
 
@@ -393,7 +406,6 @@ class Exercise_Set(db.Model):
     rest = Column(Integer, default=True)
     exercise_id = Column(Integer, ForeignKey('Exercise.id'))
 
-
     '''Init Method'''
 
     def __init__(self, weight, repetitions, rest, exercise_id):
@@ -401,7 +413,7 @@ class Exercise_Set(db.Model):
         self.repetitions = repetitions
         self.rest = rest
         self.exercise_id = exercise_id
-        
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
